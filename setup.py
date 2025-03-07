@@ -33,17 +33,15 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
-    description="merged spec",
-    author="OpenAPI Generator community",
-    author_email="team@openapitools.org",
+    description="API Client for the VA LIS System",
+    author="Quinton Robbins",
+    author_email="q@qntnrbns.com",
     url="https://github.com/qntnrbns/valis",
-    keywords=["OpenAPI", "OpenAPI-Generator", "merged spec"],
+    keywords=["virginia", "state-government", "legislation"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description_content_type='text/markdown',
-    long_description="""\
-    merged spec
-    """,  # noqa: E501
+    long_description="""""",  # noqa: E501
     package_data={"valis": ["py.typed"]},
 )

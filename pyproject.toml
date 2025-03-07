@@ -2,11 +2,11 @@
 name = "valis"
 version = "1.0.0"
 description = "merged spec"
-authors = ["OpenAPI Generator Community <team@openapitools.org>"]
-license = "NoLicense"
+authors = ["Quinton Robbins <q@qntnrbns.com>"]
+license = "LICENSE"
 readme = "README.md"
-repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
-keywords = ["OpenAPI", "OpenAPI-Generator", "merged spec"]
+repository = "https://github.com/qntnrbns/valis"
+keywords = ["virginia", "state-government", "legislation"]
 include = ["valis/py.typed"]
 
 [tool.poetry.dependencies]
