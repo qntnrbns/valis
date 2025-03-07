@@ -1,0 +1,196 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LegislationFileGeneration",
+    "description": "Handles generation of PDF and HTML for Legislation, including storage\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/LegislationFileGeneration/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationFileGeneration/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller used for ONLY reading (not writing) data (Contains GET Verbs)"
+    }
+  ]
+}

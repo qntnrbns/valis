@@ -1,0 +1,609 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LIS Members By Committee Search Service (MembersByCommittee)",
+    "description": "Members By Committee Search Service is for handling any data that combines two different distinct objects. (aka. Member by Committee, Bills by Member or Bills by Session) These compound objects will be viewed from this service\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/MembersByCommittee/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MembersByCommittee/api/getcommitteememberslistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Committee Members",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "committeeID",
+            "in": "query",
+            "description": "Unique identifier for Committee",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembersByCommitteeSearchResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MembersByCommittee/api/getcommitteememberslisttextasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Committee Members in text format",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CommitteeID",
+            "in": "query",
+            "description": "Unique identifier for Committee",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MembersByCommittee/api/getcommitteerolesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Committee Roles",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommitteeRolesReference"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MembersByCommittee/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MembersByCommittee/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CommitteeRoleReference": {
+        "type": "object",
+        "properties": {
+          "CommitteeRoleID": {
+            "type": "integer",
+            "description": "Unique identifier for this Committee Role",
+            "format": "int32"
+          },
+          "Title": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Role title",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Committee Role"
+      },
+      "CommitteeRolesReference": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommitteeRoleReference"
+            },
+            "description": "List of Committee Roles",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Committee Roles"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberByCommitteeSearchResponse": {
+        "type": "object",
+        "properties": {
+          "CommitteeMemberID": {
+            "type": "integer",
+            "description": "Unique identifier for this Committee Member",
+            "format": "int32"
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Unique identifier for this Committee",
+            "format": "int32"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Unique identifier for Member",
+            "format": "int32"
+          },
+          "MemberDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member's Name to be displayed",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "VotingSequence": {
+            "type": "integer",
+            "description": "Member voting order",
+            "format": "int32"
+          },
+          "Seniority": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Member seniority ranking",
+            "format": "int32"
+          },
+          "CommitteeRoleID": {
+            "type": "integer",
+            "description": "Unique identifier for Committee Role",
+            "format": "int32"
+          },
+          "CommitteeRoleTitle": {
+            "type": "string",
+            "description": "Committee Role title",
+            "nullable": true
+          },
+          "AssignDate": {
+            "type": "string",
+            "description": "Assignment date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "RemoveDate": {
+            "type": "string",
+            "description": "Removal date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this Member by Committee public?",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Member number (e.g. H289)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Search information for a Member by Committee"
+      },
+      "MembersByCommitteeSearchResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberByCommitteeSearchResponse"
+            },
+            "description": "Search list of Members by Committee",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Search list of Members by Committee"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}

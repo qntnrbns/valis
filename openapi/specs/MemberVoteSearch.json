@@ -1,0 +1,529 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LIS Member Vote Search Service (MemberVoteSearch)",
+    "description": "Member Vote Search Service is for providing member vote data\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/MemberVoteSearch/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MemberVoteSearch/api/getmembervotelistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Member Votes",
+        "parameters": [
+          {
+            "name": "memberId",
+            "in": "query",
+            "description": "Unique identifier for Member",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "voteTypeId",
+            "in": "query",
+            "description": "Unique identifier for Vote Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembersVoteSearchResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MemberVoteSearch/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/MemberVoteSearch/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MembersVoteSearchResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberVoteSearchResponse"
+            },
+            "description": "list of Member Votes",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Member Votes"
+      },
+      "MemberVoteSearchResponse": {
+        "type": "object",
+        "properties": {
+          "MemberID": {
+            "type": "integer",
+            "description": "Unique identifier for this Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Member number (e.g. H289)",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "VoteResult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoteResultResponse"
+            },
+            "description": "list of Vote Results",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Member Vote"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "VoteResultResponse": {
+        "type": "object",
+        "properties": {
+          "VoteID": {
+            "type": "integer",
+            "description": "Unique identifier for a Vote",
+            "format": "int32"
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Unique identifier for Committee",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Committee Name",
+            "nullable": true
+          },
+          "VoteNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Vote assigned number (e.g. H12V0164/S03V0170)",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Unique identifier for Session",
+            "format": "int32"
+          },
+          "VoteDate": {
+            "type": "string",
+            "description": "Vote date",
+            "format": "date-time"
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence results",
+            "format": "int32"
+          },
+          "VoteTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Vote Type",
+            "format": "int32"
+          },
+          "VoteType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Vote Type name",
+            "nullable": true
+          },
+          "VoteClassificationID": {
+            "type": "integer",
+            "description": "Unique identifier for Vote Classification",
+            "format": "int32",
+            "nullable": true
+          },
+          "ClassificationName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Vote Classification name",
+            "nullable": true
+          },
+          "BatchNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Vote batch number",
+            "nullable": true
+          },
+          "VoteDescription": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Vote description",
+            "nullable": true
+          },
+          "VoteActionID": {
+            "type": "integer",
+            "description": "Unique identifier for Vote Action",
+            "format": "int32"
+          },
+          "ActionDescription": {
+            "maxLength": 275,
+            "type": "string",
+            "description": "Vote Action description",
+            "nullable": true
+          },
+          "PassFail": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Vote Pass/Fail",
+            "nullable": true
+          },
+          "ResponseCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Vote Response Code",
+            "nullable": true
+          },
+          "VoteStatement": {
+            "maxLength": 2500,
+            "type": "string",
+            "description": "Vote Statement",
+            "nullable": true
+          },
+          "VoteLegislationID": {
+            "type": "integer",
+            "description": "Unique identifier for Vote Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "LegislationDescription": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Legislation description",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Vote Result"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}

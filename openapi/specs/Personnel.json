@@ -1,0 +1,692 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Personnel",
+    "description": "Handles all Personnel information including Committee clerks and staff\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getreferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Personnel",
+        "parameters": [
+          {
+            "name": "effectiveBeginDate",
+            "in": "query",
+            "description": "effective begin date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersonnelsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getstaffroletypesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Staff Role Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffRoleTypes"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getpersonnellistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Committee Staff (Personnel)",
+        "parameters": [
+          {
+            "name": "affiliationID",
+            "in": "query",
+            "description": "Unique identifier for Committee",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "staffRoleTypeID",
+            "in": "query",
+            "description": "Unique identifier for Staff Role Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "effectiveBeginDate",
+            "in": "query",
+            "description": "date this assignment began",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersonnelsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getclerkpersonnellistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Committee Clerks (Personnel)",
+        "parameters": [
+          {
+            "name": "affiliationID",
+            "in": "query",
+            "description": "Unique identifier for Committee",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "effectiveBeginDate",
+            "in": "query",
+            "description": "date this assignment began",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersonnelsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getstaffpersonnellistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Committee DLS Staff (Personnel)",
+        "parameters": [
+          {
+            "name": "affiliationID",
+            "in": "query",
+            "description": "Unique identifier for Committee",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "effectiveBeginDate",
+            "in": "query",
+            "description": "date this assignment began",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersonnelsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "PublicPersonnelResponse": {
+        "type": "object",
+        "properties": {
+          "StaffID": {
+            "type": "integer",
+            "description": "Unique identifier for Staff",
+            "format": "int32",
+            "nullable": true
+          },
+          "AffiliationID": {
+            "type": "integer",
+            "description": "Unique identifier for Committee",
+            "format": "int32",
+            "nullable": true
+          },
+          "StaffRoleTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Staff Role Type",
+            "format": "int32",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity (associated person)",
+            "format": "int32"
+          },
+          "OrganizationName": {
+            "type": "string",
+            "description": "Organization Name",
+            "nullable": true
+          },
+          "FullName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Person's name",
+            "nullable": true
+          },
+          "PhoneNumber": {
+            "maxLength": 15,
+            "type": "string",
+            "description": "Person's phone number",
+            "format": "tel",
+            "nullable": true
+          },
+          "EmailAddress": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Email address",
+            "format": "email",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "is this public?",
+            "nullable": true
+          },
+          "EffectiveBeginDate": {
+            "type": "string",
+            "description": "Effective begin date for this assignment",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EffectiveEndDate": {
+            "type": "string",
+            "description": "Effective End date for this assignment",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Public Personnel"
+      },
+      "PublicPersonnelsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "Personnels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicPersonnelResponse"
+            },
+            "description": "List of Public Personnel",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Public Personnel"
+      },
+      "StaffRoleType": {
+        "type": "object",
+        "properties": {
+          "StaffRoleTypeID": {
+            "type": "integer",
+            "description": "Staff Role Type ID - unique Identifier for staff Roles",
+            "format": "int32"
+          },
+          "Name": {
+            "type": "string",
+            "description": "Staff Role Name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Staff Role Information"
+      },
+      "StaffRoleTypes": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StaffRoleType"
+            },
+            "description": "list of Staff Role Types",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Staff Role Types"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}

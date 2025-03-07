@@ -1,0 +1,2120 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LegislationText",
+    "description": "Handles all Legislation Text information\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/LegislationText/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/gettextdispositionsreferenceasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Text Dispositions",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TextDispositionsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getlegislationtextactionlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Text Actions",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationTextActionsList"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getsponsortypelistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Sponsor Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SponsorTypesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getlegislationversionlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Versions",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationVersionsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getlegislationtextlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Text",
+        "parameters": [
+          {
+            "name": "legislationNumber",
+            "in": "query",
+            "description": "Bill numbers, comma separated, zero padded. (eg., \"HB0012,SB0021\")",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "legislationID",
+            "in": "query",
+            "description": "Unique identifier for Legislation",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "legislationVersionID",
+            "in": "query",
+            "description": "Unique identifier for Legislation Version",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationTextsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getlegislationtextbyidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Get a list of Legislation Text by unique identifier",
+        "parameters": [
+          {
+            "name": "legislationID",
+            "in": "query",
+            "description": "Unique identifier for Legislation",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "legislationTextID",
+            "in": "query",
+            "description": "Unique identifier for Legislation Text",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IsActive",
+            "in": "query",
+            "description": "is this active?",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "documentNumber",
+            "in": "query",
+            "description": "Legislation document code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "legislationNumber",
+            "in": "query",
+            "description": "Legislation number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsTextGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getdrafttextbylegislationtextidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets Legislation Draft Text by unique identifier",
+        "parameters": [
+          {
+            "name": "legislationTextID",
+            "in": "query",
+            "description": "Unique identifier for Legislation Text",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationTextDraftsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getlegislationhtmlcontentasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Returns HTML with highlights",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "documentNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hilite",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getpdfasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Returns PDF for either Legislation or an Impact Statement by reference number",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "documentCode",
+            "in": "query",
+            "description": "Document code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "referenceNumber",
+            "in": "query",
+            "description": "Reference number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/getlegislationtextshitcountsasync": {
+      "post": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of hit counts in legislation texts based on set of Legislation Text IDs and keywords",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "LegislationTextHitCountSearch",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationTextHitCountSearch"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationTextHitCountSearch"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationTextHitCountSearch"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationTextHitCountSearch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationTextHitCountsListResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationText/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AmendmentAction": {
+        "type": "object",
+        "properties": {
+          "TextClassName": {
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "AmendmentAction contains a single action in the amendment and the line afftected e.g: Strike and Insert"
+      },
+      "AmendmentChange": {
+        "type": "object",
+        "properties": {
+          "ClassName": {
+            "type": "string",
+            "nullable": true
+          },
+          "AmendmentActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AmendmentAction"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "AmendmentChange that contains list of changes in the amendment e.g: Strikes and Inserts"
+      },
+      "AmendmentItem": {
+        "type": "object",
+        "properties": {
+          "Sponsor": {
+            "$ref": "#/components/schemas/Sponsor"
+          },
+          "Line": {
+            "type": "string",
+            "description": "Amendment Line",
+            "nullable": true
+          },
+          "LineNumber": {
+            "type": "integer",
+            "description": "Amendment Line Number",
+            "format": "int32"
+          },
+          "LineClassName": {
+            "type": "string",
+            "description": "Amendment Line ClassName, always = textbi",
+            "nullable": true
+          },
+          "ItemOrder": {
+            "type": "integer",
+            "description": "Item Number",
+            "format": "int32"
+          },
+          "ItemCondition": {
+            "type": "string",
+            "description": "Amendment Condition e.g: Agreed, Rejected",
+            "nullable": true
+          },
+          "amendmentChanges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AmendmentChange"
+            },
+            "description": "Amendment Changes e.g: Strikes and Inserts",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "AmendmentItem Model - for breaking up the legislation amendment drafttext into json object"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HTMLFile": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "unique identifier of LegislationText",
+            "format": "int32"
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "unique identifier of TextFormat",
+            "format": "int32"
+          },
+          "TextFormat": {
+            "type": "string",
+            "description": "Text Format (e.g. PDF)",
+            "nullable": true
+          },
+          "FileURL": {
+            "type": "string",
+            "description": "Azure Blob Storage URL",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "type": "string",
+            "description": "Reference Number",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "internal SessionID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "HTML File"
+      },
+      "ImpactFile": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "unique identifier of LegislationText",
+            "format": "int32"
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "unique identifier of TextFormat",
+            "format": "int32"
+          },
+          "TextFormat": {
+            "type": "string",
+            "description": "Text Format (e.g. PDF)",
+            "nullable": true
+          },
+          "FileURL": {
+            "type": "string",
+            "description": "Azure Blob Storage URL",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "type": "string",
+            "description": "Reference Number",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "internal SessionID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Impact Statement file"
+      },
+      "JSONFile": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "unique identifier of LegislationText",
+            "format": "int32"
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "unique identifier of TextFormat",
+            "format": "int32"
+          },
+          "TextFormat": {
+            "type": "string",
+            "description": "Text Format (e.g. PDF)",
+            "nullable": true
+          },
+          "FileURL": {
+            "type": "string",
+            "description": "Azure Blob Storage URL",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "type": "string",
+            "description": "Reference Number",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "internal SessionID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "JSON File"
+      },
+      "LegislationsTextGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationTextGetResponse"
+            },
+            "description": "list of legislation summaries",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS Legislation Texts (using LegislationTextGetResponse). \r\nIf no valid response could be obtained, Success boolean will be false and additional information can be \r\nfound in the FailureMessage string."
+      },
+      "LegislationTextActionResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationTextActionID": {
+            "type": "integer",
+            "description": "unique identifier of the LegislationTextAction",
+            "format": "int32"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          },
+          "EventCode": {
+            "type": "string",
+            "description": "Event Code",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "building element for legislation action list"
+      },
+      "LegislationTextActionsList": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationTextActionResponse"
+            },
+            "description": "list of Legislation Text Actions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of legislation text actions"
+      },
+      "LegislationTextDraftResponse": {
+        "type": "object",
+        "properties": {
+          "DraftText": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Slim class for used to get Legislation Draft from Legislation service call to legislationText"
+      },
+      "LegislationTextDraftsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationTextDraftResponse"
+            },
+            "description": "list of text drafts",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of LegislationTextDraftResponse"
+      },
+      "LegislationTextGetResponse": {
+        "required": [
+          "DLSPrepared",
+          "IsActive",
+          "IsPublic"
+        ],
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "LIS Text Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationDraftID": {
+            "type": "integer",
+            "description": "LIS Draft Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "TextFormat": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "LIS TextFormat PDF, HTML or Impact",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "LIS TextFormat Id 1=pdf, 2=html, 3=impact statement",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationVersionID": {
+            "type": "integer",
+            "description": "LIS Legislation Version Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationVersion": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "LIS Legislation Version Name",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "LIS Legislation Database Unique Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "LIS Legislation Number, eg. SB1011",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "Legislation Text Chamber Code",
+            "nullable": true
+          },
+          "LegislationChamberCode": {
+            "type": "string",
+            "description": "Legislation Chamber Code",
+            "nullable": true
+          },
+          "SessionCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Session Code",
+            "nullable": true
+          },
+          "LegislationTextActionID": {
+            "type": "integer",
+            "description": "LIS Legislation Text Action Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "DocumentCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "bill number with versioning (legacy) eg., HB11H1",
+            "nullable": true
+          },
+          "DraftText": {
+            "type": "string",
+            "description": "LIS legislation text",
+            "nullable": true
+          },
+          "DraftTitle": {
+            "type": "string",
+            "description": "LIS legislation title or LDTtitle --typical for most bills, but not required for all legislation",
+            "nullable": true
+          },
+          "LDNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "LIS legislation Document Number (LDNummber)",
+            "nullable": true
+          },
+          "VersionDate": {
+            "type": "string",
+            "description": "Text Version Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ReleaseToPrint": {
+            "type": "string",
+            "description": "Release To Print Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "VersionCode": {
+            "maxLength": 5,
+            "type": "string",
+            "description": "Version Code",
+            "format": "string",
+            "nullable": true
+          },
+          "EventCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Event Code",
+            "format": "string",
+            "nullable": true
+          },
+          "DocURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "DocUrl",
+            "nullable": true
+          },
+          "LinkURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "LinkUrl",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Legislation Text Description",
+            "nullable": true
+          },
+          "Sponsor": {
+            "type": "string",
+            "description": "Body that authored/sponsored the Legislation Text (House/Senate/Conference/Governor)",
+            "nullable": true
+          },
+          "SponsorTypeID": {
+            "type": "integer",
+            "description": "unique identifier for sponsor type (e.g. 1=House of Delegates, 2=Senate, 3=Committee, 4=Member, etc)",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionYear": {
+            "type": "integer",
+            "description": "Legislation Session Year",
+            "format": "int32"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this text available to the public"
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is this text active"
+          },
+          "IsComplete": {
+            "type": "boolean",
+            "description": "Is complete?",
+            "nullable": true
+          },
+          "IsIHOD": {
+            "type": "boolean",
+            "description": "Is text from IHOD?",
+            "nullable": true
+          },
+          "GovernorsRequest": {
+            "type": "boolean",
+            "description": "Is this at the Request of the Governor?",
+            "nullable": true
+          },
+          "DLSPrepared": {
+            "type": "boolean",
+            "description": "Is this text prepared by DLS?"
+          },
+          "ConsentRequired": {
+            "type": "boolean",
+            "description": "Is consent required for this text?"
+          },
+          "IsEmergency": {
+            "type": "boolean",
+            "description": "Is this text emergency ?"
+          },
+          "IsReprint": {
+            "type": "boolean",
+            "description": "Is this text Reprint ?"
+          },
+          "IsPlural": {
+            "type": "boolean",
+            "description": "does this contain multiple items e.g. amendments?"
+          },
+          "OnReconvene": {
+            "type": "boolean",
+            "description": "for a Reconvened session?",
+            "nullable": true
+          },
+          "ReferenceLDNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "LIS Reference legislation Document Number (LDNummber)",
+            "nullable": true
+          },
+          "TextDispositionID": {
+            "type": "integer",
+            "description": "unique identifier for Text Disposition (e.g. 1=Offered, 2=Recommended, 3=Reported, etc)",
+            "format": "int32",
+            "nullable": true
+          },
+          "TextDisposition": {
+            "type": "string",
+            "description": "Text Disposition (e.g. Offered, Recommended, Reported, etc)",
+            "nullable": true
+          },
+          "ReferenceTextID": {
+            "type": "integer",
+            "description": "LIS Reference Text Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Committee unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Committee Name",
+            "nullable": true
+          },
+          "CommitteeNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Committee assigned number(Example: H01, S01 or 001)",
+            "nullable": true
+          },
+          "PDFFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PDFFile"
+            },
+            "description": "List of PDFFile",
+            "nullable": true
+          },
+          "HTMLFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HTMLFile"
+            },
+            "description": "list of HTMLFile",
+            "nullable": true
+          },
+          "ImpactFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImpactFile"
+            },
+            "description": "List of ImpactFile",
+            "nullable": true
+          },
+          "LinkFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LinkFile"
+            },
+            "description": "List of LinkFile",
+            "nullable": true
+          },
+          "JSONFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JSONFile"
+            },
+            "description": "List of JSONFile",
+            "nullable": true
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PatronBaseModel"
+            },
+            "description": "list of patrons",
+            "nullable": true
+          },
+          "AmendmentItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AmendmentItem"
+            },
+            "nullable": true
+          },
+          "LegislationClassID": {
+            "type": "integer",
+            "description": " LegislationClassID further identifies type of legislation beyond the standard Joint/Bill/Resolution defined with Legislation Type Code\r\n1\tLegislation\r\n2\tMemorial Resolution\r\n3\tCommending Resolution\r\n4\tElection of Judges\r\n5\tBudget",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationClass": {
+            "type": "string",
+            "description": "LIS Legislation Description (e.g: memorial or commending resolution)",
+            "nullable": true
+          },
+          "LegislationType": {
+            "type": "string",
+            "description": "legislation type description e.g. \"Bill\"",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing LIS legislation Text information. If no valid response could be obtained, Success  \r\nboolean will be false and additional information can be found in the FailureMessage string."
+      },
+      "LegislationTextHitCountDocument": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationTextHitCountListResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "HitCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationTextHitCountSearch": {
+        "type": "object",
+        "properties": {
+          "Documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationTextHitCountDocument"
+            },
+            "nullable": true
+          },
+          "Location": {
+            "type": "string",
+            "nullable": true
+          },
+          "KeywordExpression": {
+            "type": "string",
+            "nullable": true
+          },
+          "WordList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationTextHitCountWord"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationTextHitCountsListResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "HitCounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationTextHitCountListResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationTextHitCountWord": {
+        "type": "object",
+        "properties": {
+          "Hitword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationTextResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "unique identifier for the Legislation",
+            "format": "int32"
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Bill #",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Legislation Description",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "unique identifier for the Session",
+            "format": "int32"
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "unique identifier of LegislationText",
+            "format": "int32"
+          },
+          "DraftDate": {
+            "type": "string",
+            "description": "Draft Date",
+            "format": "date-time"
+          },
+          "DocumentCode": {
+            "type": "string",
+            "description": "Document Code",
+            "nullable": true
+          },
+          "LDNumber": {
+            "type": "string",
+            "description": "Bill LD#",
+            "nullable": true
+          },
+          "LegislationVersionID": {
+            "type": "integer",
+            "description": "unique identifier of LegislationVersion",
+            "format": "int32"
+          },
+          "Version": {
+            "type": "string",
+            "description": "Version",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Public?"
+          },
+          "IsComplete": {
+            "type": "boolean",
+            "description": "Is complete?",
+            "nullable": true
+          },
+          "GovernorsRequest": {
+            "type": "boolean",
+            "description": "Is this at the Request of the Governor?",
+            "nullable": true
+          },
+          "PDFFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PDFFile"
+            },
+            "description": "List of PDFFile",
+            "nullable": true
+          },
+          "HTMLFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HTMLFile"
+            },
+            "description": "list of HTMLFile",
+            "nullable": true
+          },
+          "ImpactFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImpactFile"
+            },
+            "description": "List of ImpactFile",
+            "nullable": true
+          },
+          "LinkFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LinkFile"
+            },
+            "description": "List of LinkFile",
+            "nullable": true
+          },
+          "IsEmergency": {
+            "type": "boolean",
+            "description": "Is this text an emergency ?"
+          },
+          "IsReprint": {
+            "type": "boolean",
+            "description": "Is this text Reprint ?"
+          },
+          "TextDispositionID": {
+            "type": "integer",
+            "description": "Text Disposition ID",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation Text Response"
+      },
+      "LegislationTextsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationTextResponse"
+            },
+            "description": "list of legislation text",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation Texts Response"
+      },
+      "LegislationVersionResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationVersionID": {
+            "type": "integer",
+            "description": "unique identifier of the LegislationVersion",
+            "format": "int32"
+          },
+          "Name": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "name of the LegislationVersion",
+            "nullable": true
+          },
+          "VersionCode": {
+            "maxLength": 5,
+            "type": "string",
+            "description": "code for the LegislationVersion",
+            "nullable": true
+          },
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "ID for what legislation status this version correlates to",
+            "format": "int32",
+            "nullable": true
+          },
+          "Suffix": {
+            "maxLength": 5,
+            "type": "string",
+            "description": "The suffix that is added to the end of the legislation number on the printed legislation text",
+            "nullable": true
+          },
+          "AuthoringLabel": {
+            "type": "string",
+            "description": "legislation version label for authoring purposes",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Different types of versions for legislation"
+      },
+      "LegislationVersionsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationVersionResponse"
+            },
+            "description": "list of versions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of legislation versions"
+      },
+      "LinkFile": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "unique identifier of LegislationText",
+            "format": "int32"
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "unique identifier of TextFormat",
+            "format": "int32"
+          },
+          "TextFormat": {
+            "type": "string",
+            "description": "Text Format (e.g. PDF)",
+            "nullable": true
+          },
+          "FileURL": {
+            "type": "string",
+            "description": "Azure Blob Storage URL",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "type": "string",
+            "description": "Reference Number",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "internal SessionID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Link File"
+      },
+      "PatronBaseModel": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Patron Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Display Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Patron Base Model - Use this base model for all Patron Objects."
+      },
+      "PDFFile": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "unique identifier of LegislationText",
+            "format": "int32"
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "unique identifier of TextFormat",
+            "format": "int32"
+          },
+          "TextFormat": {
+            "type": "string",
+            "description": "Text Format (e.g. PDF)",
+            "nullable": true
+          },
+          "FileURL": {
+            "type": "string",
+            "description": "Azure Blob Storage URL",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "type": "string",
+            "description": "Reference Number",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "internal SessionID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          },
+          "PageCount": {
+            "type": "integer",
+            "description": "Page count for a particular bill pdf",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "PDF File object representing storage in Azure Blob Storage"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "Sponsor": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ClassName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SponsorTypeResponse": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Body that can sponsor a Legislation Text (House/Senate/Conference/Governor)",
+            "nullable": true
+          },
+          "SponsorTypeID": {
+            "type": "integer",
+            "description": "unique identifier for sponsor type (e.g. 1=House of Delegates, 2=Senate, 3=Committee, 4=Member, etc)",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Sponsor type"
+      },
+      "SponsorTypesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SponsorTypeResponse"
+            },
+            "description": "list of sponsor types",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of sponsor types"
+      },
+      "TextDispositionResponse": {
+        "type": "object",
+        "properties": {
+          "TextDispositionID": {
+            "type": "integer",
+            "description": "unique identifier of the Text Disposition",
+            "format": "int32"
+          },
+          "Name": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "name of the Text Disposition",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Text Disposition reference"
+      },
+      "TextDispositionsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextDispositionResponse"
+            },
+            "description": "list of text dispositions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of text dispositions"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller used for ONLY reading (not writing) data (Contains GET Verbs)"
+    }
+  ]
+}

@@ -1,0 +1,3732 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Calendar",
+    "description": "Handles all Calendar, Docket and House Agenda information for establishing session business items\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Calendar/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getcalendarlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Calendars",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Code for Session (e.g. 20181 = 2018 Regular Session)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "calendarDate",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarsPublicListGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getdocketlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Dockets",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "committeeID",
+            "in": "query",
+            "description": "Unique identifier for Committee",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (eg. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocketsPublicListGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getdocketlistbycommitteenumberasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Get a List of Dockets by Session Code, Committee Number and Chamber Code\r\nOnly Show Public Dockets",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session Code (e.g. 20181)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "committeeNumber",
+            "in": "query",
+            "description": "Committee # (e.g. S12)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocketsPublicListGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getcalendaractionsreferenceasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Calendar Actions",
+        "parameters": [
+          {
+            "name": "calendarCategoryTypeID",
+            "in": "query",
+            "description": "Unique identifier for Calendar Category Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "calendarTypeID",
+            "in": "query",
+            "description": "Unique identifier for Calendar Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "legislationChamberCode",
+            "in": "query",
+            "description": "Origination Chamber code of Legislation (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarActionResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getcalendarcategorytypesreferenceasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Calendar Categories",
+        "parameters": [
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarCategoryTypesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getcalendartypesreferenceasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Calendar Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarTypesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getcategorytypesreferenceasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Calendar Category Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryTypesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getcalendarsbyidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Public Calendar using unique identifier",
+        "parameters": [
+          {
+            "name": "calendarId",
+            "in": "query",
+            "description": "Unique identifier for calendar",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "referenceNumber",
+            "in": "query",
+            "description": "Reference number for calendar",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarsPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/getdocketsbyidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Public Dockets using unique identifier",
+        "parameters": [
+          {
+            "name": "docketId",
+            "in": "query",
+            "description": "Unique identifier for Docket",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "referenceNumber",
+            "in": "query",
+            "description": "Reference number for Docket",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocketsWithSchedulesPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Calendar/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AgendaItemPartnerGetResponse": {
+        "required": [
+          "ModificationDate"
+        ],
+        "type": "object",
+        "properties": {
+          "AgendaId": {
+            "type": "integer",
+            "description": "Agenda ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "Agenda Item Description",
+            "nullable": true
+          },
+          "CalendarDescription": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "Agenda Item Calendar Description (will be set with HTML formatting)",
+            "nullable": true
+          },
+          "LDTitle": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "LD Draft Title",
+            "nullable": true
+          },
+          "LegislationTextId": {
+            "type": "integer",
+            "description": "Calendar Category Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "LDNumber": {
+            "type": "string",
+            "description": "Legislation Draft (LD)Number of the Amemdments",
+            "nullable": true
+          },
+          "DraftText": {
+            "type": "string",
+            "description": "Legislation Draft Text",
+            "nullable": true
+          },
+          "VoteID": {
+            "type": "integer",
+            "description": "Vote unique Identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "is Agenda Item active",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationEventID": {
+            "type": "integer",
+            "description": "unique identifier for legislation event",
+            "format": "int32",
+            "nullable": true
+          },
+          "AgendaItemId": {
+            "type": "integer",
+            "description": "Agenda Item ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "modification date",
+            "format": "date-time"
+          },
+          "VoteMember": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoteMemberPartnerGetResponse"
+            },
+            "description": "list of Vote Members for Agenda Item",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Agenda Item used for Item floor agendas"
+      },
+      "AgendaItemPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "AgendaId": {
+            "type": "integer",
+            "description": "Agenda ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "Agenda Item Description",
+            "nullable": true
+          },
+          "CalendarDescription": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "Agenda Item Calendar Description (will be set with HTML formatting)",
+            "nullable": true
+          },
+          "LDTitle": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "LD Draft Title",
+            "nullable": true
+          },
+          "LegislationTextId": {
+            "type": "integer",
+            "description": "Calendar Category Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "LDNumber": {
+            "type": "string",
+            "description": "Legislation Draft (LD)Number of the Amemdments",
+            "nullable": true
+          },
+          "DraftText": {
+            "type": "string",
+            "description": "Legislation Draft Text",
+            "nullable": true
+          },
+          "VoteID": {
+            "type": "integer",
+            "description": "Vote unique Identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "is Agenda Item active",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationEventID": {
+            "type": "integer",
+            "description": "unique identifier for legislation event",
+            "format": "int32",
+            "nullable": true
+          },
+          "AgendaItemId": {
+            "type": "integer",
+            "description": "Agenda Item ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "VoteMember": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoteMemberPublicGetResponse"
+            },
+            "description": "list of Vote Members for Agenda Item",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Agenda Item response"
+      },
+      "AgendaPartnerGetResponse": {
+        "required": [
+          "AgendaID",
+          "ModificationDate"
+        ],
+        "type": "object",
+        "properties": {
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence of Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarCategoryID": {
+            "type": "integer",
+            "description": "Calendar Category ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "IsHidden": {
+            "type": "boolean",
+            "description": "Is the CalendarCategoryTemplate hidden?",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation Key",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation Number",
+            "nullable": true
+          },
+          "LegislationDescription": {
+            "type": "string",
+            "description": "Legislation Description",
+            "nullable": true
+          },
+          "LDNumber": {
+            "type": "string",
+            "description": "Legislation Draft (LD)Number",
+            "nullable": true
+          },
+          "Summary": {
+            "type": "string",
+            "description": "Legislation Summary",
+            "nullable": true
+          },
+          "DraftTitle": {
+            "type": "string",
+            "description": "Draft Title",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "is Agenda Item active",
+            "nullable": true
+          },
+          "CalendarCategoryTemplateID": {
+            "type": "integer",
+            "description": "Calendar Category Template ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommunicationID": {
+            "type": "integer",
+            "description": "Communication ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "PageNumber": {
+            "type": "integer",
+            "description": "Page Number",
+            "format": "int32",
+            "nullable": true
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Effective Type",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "CandidateDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "AgendaID": {
+            "type": "integer",
+            "description": "Agenda unique identifier",
+            "format": "int32"
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "modification date",
+            "format": "date-time"
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PatronPartnerGetResponse"
+            },
+            "description": "list of Patrons for an agenda",
+            "nullable": true
+          },
+          "AgendaItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgendaItemPartnerGetResponse"
+            },
+            "description": "list of Agenda Items for Agenda",
+            "nullable": true
+          },
+          "LegislationTitle": {
+            "type": "string",
+            "description": "Legislation Title",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Private Agenda Get Response (includes Id and Modification Date)"
+      },
+      "AgendaPublicGetResponse": {
+        "required": [
+          "AgendaID"
+        ],
+        "type": "object",
+        "properties": {
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence of Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarCategoryID": {
+            "type": "integer",
+            "description": "Calendar Category ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "IsHidden": {
+            "type": "boolean",
+            "description": "Is the CalendarCategoryTemplate hidden?",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 8000,
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation Key",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation Number",
+            "nullable": true
+          },
+          "LegislationDescription": {
+            "type": "string",
+            "description": "Legislation Description",
+            "nullable": true
+          },
+          "LDNumber": {
+            "type": "string",
+            "description": "Legislation Draft (LD)Number",
+            "nullable": true
+          },
+          "Summary": {
+            "type": "string",
+            "description": "Legislation Summary",
+            "nullable": true
+          },
+          "DraftTitle": {
+            "type": "string",
+            "description": "Draft Title",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "is Agenda Item active",
+            "nullable": true
+          },
+          "CalendarCategoryTemplateID": {
+            "type": "integer",
+            "description": "Calendar Category Template ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommunicationID": {
+            "type": "integer",
+            "description": "Communication ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "PageNumber": {
+            "type": "integer",
+            "description": "Page Number",
+            "format": "int32",
+            "nullable": true
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Effective Type",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "CandidateDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "AgendaID": {
+            "type": "integer",
+            "description": "Agenda unique identifier",
+            "format": "int32"
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PatronPartnerGetResponse"
+            },
+            "description": "list of Patrons for an agenda",
+            "nullable": true
+          },
+          "AgendaItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgendaItemPublicGetResponse"
+            },
+            "description": "list of Agenda Items for Agenda",
+            "nullable": true
+          },
+          "DisplayType": {
+            "type": "boolean",
+            "description": "should the calendar item's type be displayed",
+            "nullable": true
+          },
+          "LegislationTitle": {
+            "type": "string",
+            "description": "Legislation Title",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Agenda Get Response (includes Id)"
+      },
+      "CalendarActionReferenceResponse": {
+        "required": [
+          "ActionReferenceID"
+        ],
+        "type": "object",
+        "properties": {
+          "ActionReferenceID": {
+            "type": "integer",
+            "description": "Calendar Action unique identifier",
+            "format": "int32"
+          },
+          "IsMandatory": {
+            "type": "boolean",
+            "description": "is this action reference required? true/false"
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence for action reference",
+            "format": "int32"
+          },
+          "ReferenceText": {
+            "type": "string",
+            "description": "reference text for the action reference, e.g. \"On Motion Of \"",
+            "nullable": true
+          },
+          "CalendarActionID": {
+            "type": "integer",
+            "description": "unique identifier for associated calendar action",
+            "format": "int32"
+          },
+          "ActionReferenceTypeID": {
+            "type": "integer",
+            "description": "unique identifier for associated action reference type",
+            "format": "int32"
+          },
+          "ActionReferenceType": {
+            "type": "string",
+            "description": "name for for associated action reference type e.g. Member",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Action \"Action Reference\" Reference Response"
+      },
+      "CalendarActionResponse": {
+        "required": [
+          "CalendarActionID",
+          "Description",
+          "VoteDescription"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarActionID": {
+            "type": "integer",
+            "description": "Calendar Action unique identifier",
+            "format": "int32"
+          },
+          "VoteDescription": {
+            "type": "string",
+            "description": "Vote Description"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Calendar Action Description"
+          },
+          "EventCode": {
+            "type": "string",
+            "description": "Corresponding Event Code",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "CategoryCode": {
+            "type": "string",
+            "description": "Category Code",
+            "nullable": true
+          },
+          "CalendarCategoryTypeID": {
+            "type": "integer",
+            "description": "Calendar Category Type ID",
+            "format": "int32"
+          },
+          "LegislationChamberCode": {
+            "type": "string",
+            "description": "Legislation Chamber Code",
+            "nullable": true
+          },
+          "IsPassed": {
+            "type": "boolean",
+            "description": "Has Action Passed?",
+            "nullable": true
+          },
+          "InPreview": {
+            "type": "boolean",
+            "description": "If not set, will not show for preview/generation purposes",
+            "nullable": true
+          },
+          "ActionReferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarActionReferenceResponse"
+            },
+            "description": "optional list of Action References",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Action Reference Response"
+      },
+      "CalendarCategoryPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "CalendarID": {
+            "type": "integer",
+            "description": "Calendar ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarCategoryTypeID": {
+            "type": "integer",
+            "description": "Calendar Category Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CategoryCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Category Code",
+            "nullable": true
+          },
+          "CategoryType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Category Type",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Calendar Category Type Description",
+            "nullable": true
+          },
+          "PluralDescription": {
+            "type": "string",
+            "description": "Calendar Category Type Description if plural",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Calendar Category Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "DisplayType": {
+            "type": "boolean",
+            "description": "Display Calendar Category Type",
+            "nullable": true
+          },
+          "IsLegislationCategory": {
+            "type": "boolean",
+            "description": "Legislation Indicator",
+            "nullable": true
+          },
+          "IsPrint": {
+            "type": "boolean",
+            "description": "Printable Indicator",
+            "nullable": true
+          },
+          "CalendarCategoryID": {
+            "type": "integer",
+            "description": "Calendar Category unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "Agendas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgendaPublicGetResponse"
+            },
+            "description": "Listing of Agendas",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Category Public Get Response"
+      },
+      "CalendarCategoryTypeResponse": {
+        "required": [
+          "CalendarCategoryTypeID",
+          "CalendarTypeID",
+          "CategoryCode",
+          "CategoryTypeID",
+          "Description",
+          "IsLegislationCategory",
+          "Sequence"
+        ],
+        "type": "object",
+        "properties": {
+          "ClerksCopy": {
+            "type": "boolean"
+          },
+          "CalendarCategoryTypeID": {
+            "type": "integer",
+            "description": "Calendar Category unique identifier",
+            "format": "int32"
+          },
+          "CategoryCode": {
+            "type": "string",
+            "description": "Category Code"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Category Type Description"
+          },
+          "PluralDescription": {
+            "type": "string",
+            "description": "Category Type Description if plural",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32"
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Category Chamber Code (H = House, S = Senate)",
+            "nullable": true
+          },
+          "CalendarTypeID": {
+            "type": "integer",
+            "description": "Calendar Type ID",
+            "format": "int32"
+          },
+          "CategoryTypeID": {
+            "type": "integer",
+            "description": "Category Type ID",
+            "format": "int32"
+          },
+          "CategoryType": {
+            "type": "string",
+            "description": "Category Type",
+            "nullable": true
+          },
+          "DisplayType": {
+            "type": "boolean",
+            "description": "Display Type"
+          },
+          "LegislationTypeCode": {
+            "type": "string",
+            "description": "Legislation Type Code",
+            "nullable": true
+          },
+          "LegislationChamberCode": {
+            "type": "string",
+            "description": "Legislation Chamber Code",
+            "nullable": true
+          },
+          "IsLegislationCategory": {
+            "type": "boolean",
+            "description": "Legislation Indicator"
+          },
+          "IsPrint": {
+            "type": "boolean",
+            "description": "Printable Indicator",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Category Type Reference Response"
+      },
+      "CalendarCategoryTypesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarCategoryTypeResponse"
+            },
+            "description": "list of Calendar Actions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Categories Reference Response"
+      },
+      "CalendarCommentPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "CalendarID": {
+            "type": "integer",
+            "description": "Calendar ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Comment": {
+            "type": "string",
+            "description": "Comment text",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Calendar Category Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "Deletion Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "CalendarCommentID": {
+            "type": "integer",
+            "description": "Calendar Comment unique identifier",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Comment Public Get Response"
+      },
+      "CalendarDisplayPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "DisplayColumn": {
+            "type": "string",
+            "description": "Display Column",
+            "nullable": true
+          },
+          "IsDisplayed": {
+            "type": "boolean",
+            "description": "Is Displayed",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Display Public Get Response"
+      },
+      "CalendarFileBaseModel": {
+        "required": [
+          "TextFormatID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarFileID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Files",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Calendar/Docket/Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Unique Identifier for Text format ID",
+            "format": "int32"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "File Generated",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "File Public",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "File Active",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Base Model for Calendar Files"
+      },
+      "CalendarFilePublicGetResponse": {
+        "required": [
+          "TextFormatID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarFileID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Files",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Calendar/Docket/Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Unique Identifier for Text format ID",
+            "format": "int32"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "File Generated",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "File Public",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "File Active",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CalendarFilePublicGetResponse"
+      },
+      "CalendarPublicGetResponse": {
+        "required": [
+          "CalendarDate",
+          "CalendarID",
+          "CalendarType",
+          "SessionID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarDate": {
+            "type": "string",
+            "description": "Calendar Date",
+            "format": "date-time"
+          },
+          "MeetingTime": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Meeting Time",
+            "nullable": true
+          },
+          "CalendarNumber": {
+            "type": "integer",
+            "description": "Numeric Indicator for Primary and Supplemental",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Calendar Description",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Calendar for Public Consumption",
+            "nullable": true
+          },
+          "CalendarType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Calendar Type"
+          },
+          "CalendarTypeID": {
+            "type": "integer",
+            "description": "Calendar Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code (H=House / S=Senate)",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session Code",
+            "nullable": true
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "Vote Room ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "RoomDescription": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Vote Room Description",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Meeting Notes/Comments",
+            "nullable": true
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Pending Change to Calendar",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Reference Number used for External reference to calendar",
+            "nullable": true
+          },
+          "IsProforma": {
+            "type": "boolean",
+            "description": "IsProforma to Calendar",
+            "nullable": true
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "Calendar Deletion Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Calendar unique identifier",
+            "format": "int32"
+          },
+          "Staff": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StaffPartnerGetResponse"
+            },
+            "description": "Listing of Staff",
+            "nullable": true
+          },
+          "CalendarCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarCategoryPublicGetResponse"
+            },
+            "description": "Listing of Public Calendar Categories",
+            "nullable": true
+          },
+          "CalendarComments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarCommentPublicGetResponse"
+            },
+            "description": "Listing of Calendar Comments",
+            "nullable": true
+          },
+          "CalendarFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarFilePublicGetResponse"
+            },
+            "description": "Listing of Calendar Files",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Display of Full Calendars Objects that are Published (includes ID)"
+      },
+      "CalendarPublicListGetResponse": {
+        "required": [
+          "CalendarDate",
+          "CalendarID",
+          "CalendarType",
+          "SessionID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarDate": {
+            "type": "string",
+            "description": "Calendar Date",
+            "format": "date-time"
+          },
+          "MeetingTime": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Meeting Time",
+            "nullable": true
+          },
+          "CalendarNumber": {
+            "type": "integer",
+            "description": "Numeric Indicator for Primary and Supplemental",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Calendar Description",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Calendar for Public Consumption",
+            "nullable": true
+          },
+          "CalendarType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Calendar Type"
+          },
+          "CalendarTypeID": {
+            "type": "integer",
+            "description": "Calendar Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code (H=House / S=Senate)",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session Code",
+            "nullable": true
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "Vote Room ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "RoomDescription": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Vote Room Description",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Meeting Notes/Comments",
+            "nullable": true
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Pending Change to Calendar",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Reference Number used for External reference to calendar",
+            "nullable": true
+          },
+          "IsProforma": {
+            "type": "boolean",
+            "description": "IsProforma to Calendar",
+            "nullable": true
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "Calendar Deletion Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Calendar unique identifier",
+            "format": "int32"
+          },
+          "CalendarFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarFileBaseModel"
+            },
+            "description": "list of Calendar Files for a specific Calendar",
+            "nullable": true
+          },
+          "CalendarComments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarCommentPublicGetResponse"
+            },
+            "description": "Listing of Calendar Comments",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Response for Public Display"
+      },
+      "CalendarsPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarPublicGetResponse"
+            },
+            "description": "list of Calendars",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Display of Full Calendars Objects that are Published (includes ID)"
+      },
+      "CalendarsPublicListGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarPublicListGetResponse"
+            },
+            "description": "list of Calendars",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendars Public Get Response"
+      },
+      "CalendarTypeResponse": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Description/Name of the ID",
+            "nullable": true
+          },
+          "ID": {
+            "type": "integer",
+            "description": "Category Type unique identifier",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Type Reference Response"
+      },
+      "CalendarTypesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarTypeResponse"
+            },
+            "description": "list of Calendar Actions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendars Types Reference Response"
+      },
+      "CategoryTypeResponse": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Description/Name of the ID",
+            "nullable": true
+          },
+          "ID": {
+            "type": "integer",
+            "description": "Category Type unique identifier",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Category Type Reference Response"
+      },
+      "CategoryTypesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryTypeResponse"
+            },
+            "description": "list of Calendar Actions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Categories Types Reference Response"
+      },
+      "CommitteeMemberPartnerGetResponse": {
+        "type": "object",
+        "properties": {
+          "CommitteeMemberID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Committee Member Relationship",
+            "format": "int32"
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Committee",
+            "format": "int32"
+          },
+          "CommitteeNumber": {
+            "type": "string",
+            "description": "Committee Number",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Member",
+            "format": "int32"
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "PartyCode": {
+            "type": "string",
+            "description": "Party Code",
+            "nullable": true
+          },
+          "VotingSequence": {
+            "type": "integer",
+            "description": "Voting Sequence",
+            "format": "int32"
+          },
+          "DisplaySequence": {
+            "type": "integer",
+            "description": "Display Sequence",
+            "format": "int32"
+          },
+          "CommitteeRoleID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Committee Role ID",
+            "format": "int32"
+          },
+          "Title": {
+            "type": "string",
+            "description": "Member Title",
+            "nullable": true
+          },
+          "EffectiveDate": {
+            "type": "string",
+            "description": "Effective Date",
+            "format": "date-time"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Member Public"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Partner Get for Committee Member"
+      },
+      "DocketCategoryPublicGetResponse": {
+        "required": [
+          "CalendarCategoryID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarID": {
+            "type": "integer",
+            "description": "Calendar ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarCategoryTypeID": {
+            "type": "integer",
+            "description": "Calendar Category Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CategoryCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Category Code",
+            "nullable": true
+          },
+          "CategoryType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Category Type",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Calendar Category Type Description",
+            "nullable": true
+          },
+          "PluralDescription": {
+            "type": "string",
+            "description": "Calendar Category Type Description if plural",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Calendar Category Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "DisplayType": {
+            "type": "boolean",
+            "description": "Display Calendar Category Type",
+            "nullable": true
+          },
+          "IsLegislationCategory": {
+            "type": "boolean",
+            "description": "Legislation Indicator",
+            "nullable": true
+          },
+          "IsPrint": {
+            "type": "boolean",
+            "description": "Printable Indicator",
+            "nullable": true
+          },
+          "CalendarCategoryID": {
+            "type": "integer",
+            "description": "Calendar Category unique identifier",
+            "format": "int32"
+          },
+          "DocketItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocketItemPublicGetResponse"
+            },
+            "description": "Listing of Docket Items",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Docket Category Public Get Response"
+      },
+      "DocketFilePartnerGetResponse": {
+        "required": [
+          "TextFormatID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarFileID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Files",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Calendar/Docket/Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Unique Identifier for Text format ID",
+            "format": "int32"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "File Generated",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "File Public",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "File Active",
+            "nullable": true
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "last modification date, needed to control updates",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Docket File"
+      },
+      "DocketFilePublicGetResponse": {
+        "required": [
+          "TextFormatID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarFileID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Files",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Calendar/Docket/Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Unique Identifier for Text format ID",
+            "format": "int32"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "File Generated",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "File Public",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "File Active",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Docket Files"
+      },
+      "DocketItemPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence of Docket(Committee Calendar) Items",
+            "format": "int32",
+            "nullable": true
+          },
+          "DocketID": {
+            "type": "integer",
+            "description": "Docket(Committee Calendar) ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CategoryType": {
+            "type": "string",
+            "description": "Category Type",
+            "nullable": true
+          },
+          "DocketCategoryID": {
+            "type": "integer",
+            "description": "Docket(Committee Calendar) Category ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CategoryCode": {
+            "type": "string",
+            "description": "Category Code",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Docket Category Description",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation Number",
+            "nullable": true
+          },
+          "LegislationDescription": {
+            "type": "string",
+            "description": "Legislation Description",
+            "nullable": true
+          },
+          "LDNumber": {
+            "type": "string",
+            "description": "Legislation Draft (LD)Number",
+            "nullable": true
+          },
+          "Summary": {
+            "type": "string",
+            "description": "Legislation Summary",
+            "nullable": true
+          },
+          "DraftTitle": {
+            "type": "string",
+            "description": "Draft Title",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "is Agenda Item active",
+            "nullable": true
+          },
+          "CalendarCategoryTemplateID": {
+            "type": "integer",
+            "description": "Calendar Category Template ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommunicationID": {
+            "type": "integer",
+            "description": "Communication ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "CommitteeID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CandidateDate": {
+            "type": "string",
+            "description": "Candidate Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "DocketItemID": {
+            "type": "integer",
+            "description": "Unique Identifier for Docket Item ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PatronPartnerGetResponse"
+            },
+            "description": "list of Patrons for an Docket Item",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Docket Item Public Get Response which includes ID"
+      },
+      "DocketPublicListGetResponse": {
+        "required": [
+          "CommitteeID",
+          "DocketDate",
+          "DocketID",
+          "DocketType",
+          "SessionID"
+        ],
+        "type": "object",
+        "properties": {
+          "DocketDate": {
+            "type": "string",
+            "description": "Docket(Committee Calendar) Date",
+            "format": "date-time"
+          },
+          "MeetingTime": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Meeting Time",
+            "nullable": true
+          },
+          "DocketNumber": {
+            "type": "integer",
+            "description": "Docket(Committee Calendar) Number",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Docket(Committee Calendar) Description",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Docket(Committee Calendar) for Public Consumption",
+            "nullable": true
+          },
+          "DocketTypeID": {
+            "type": "integer",
+            "description": "Docket(Committee Calendar) Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "DocketType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Docket Type"
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code is always defaulted to S for Senate",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session Code",
+            "nullable": true
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "Vote Room ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Meeting Notes/Comments",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Committee ID",
+            "format": "int32"
+          },
+          "CommitteeName": {
+            "type": "string",
+            "description": "Committee Name",
+            "nullable": true
+          },
+          "ParentCommitteeName": {
+            "type": "string",
+            "description": "Parent Committee Name",
+            "nullable": true
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Pending Change to Docket",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Reference Number used for External Reference to Docket",
+            "nullable": true
+          },
+          "IsProforma": {
+            "type": "boolean",
+            "description": "IsProforma to Calendar",
+            "nullable": true
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "Docket(Committee Calendar) Deletion Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "DocketID": {
+            "type": "integer",
+            "description": "Docket unique identifier",
+            "format": "int32"
+          },
+          "DocketFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocketFilePublicGetResponse"
+            },
+            "description": "list of Docket Files for a specific Senate Docket",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Docket Listing"
+      },
+      "DocketsPublicListGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocketPublicListGetResponse"
+            },
+            "description": "list of Dockets",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dockets Public Get Response"
+      },
+      "DocketsWithSchedulesPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocketWithSchedulePublicGetResponse"
+            },
+            "description": "list of Dockets",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Dockets with Schedules for Public consumption"
+      },
+      "DocketWithSchedulePublicGetResponse": {
+        "required": [
+          "CommitteeID",
+          "DocketDate",
+          "DocketID",
+          "DocketType",
+          "SessionID"
+        ],
+        "type": "object",
+        "properties": {
+          "DocketDate": {
+            "type": "string",
+            "description": "Docket(Committee Calendar) Date",
+            "format": "date-time"
+          },
+          "MeetingTime": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Meeting Time",
+            "nullable": true
+          },
+          "DocketNumber": {
+            "type": "integer",
+            "description": "Docket(Committee Calendar) Number",
+            "format": "int32",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Docket(Committee Calendar) Description",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Docket(Committee Calendar) for Public Consumption",
+            "nullable": true
+          },
+          "DocketTypeID": {
+            "type": "integer",
+            "description": "Docket(Committee Calendar) Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "DocketType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Docket Type"
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code is always defaulted to S for Senate",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session Code",
+            "nullable": true
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "Vote Room ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Meeting Notes/Comments",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Committee ID",
+            "format": "int32"
+          },
+          "CommitteeName": {
+            "type": "string",
+            "description": "Committee Name",
+            "nullable": true
+          },
+          "ParentCommitteeName": {
+            "type": "string",
+            "description": "Parent Committee Name",
+            "nullable": true
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Pending Change to Docket",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Reference Number used for External Reference to Docket",
+            "nullable": true
+          },
+          "IsProforma": {
+            "type": "boolean",
+            "description": "IsProforma to Calendar",
+            "nullable": true
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "Docket(Committee Calendar) Deletion Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "DocketID": {
+            "type": "integer",
+            "description": "Docket unique identifier",
+            "format": "int32"
+          },
+          "CalendarDisplay": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarDisplayPublicGetResponse"
+            },
+            "description": "Listing of Calendar Displays",
+            "nullable": true
+          },
+          "CommitteeMember": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommitteeMemberPartnerGetResponse"
+            },
+            "description": "Listing of Committee Members",
+            "nullable": true
+          },
+          "Staff": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StaffPartnerGetResponse"
+            },
+            "description": "Listing of Staff",
+            "nullable": true
+          },
+          "DocketCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocketCategoryPublicGetResponse"
+            },
+            "description": "Listing of Calendar Categories",
+            "nullable": true
+          },
+          "DocketFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocketFilePartnerGetResponse"
+            },
+            "description": "Listing of Docket Files",
+            "nullable": true
+          },
+          "Schedules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicScheduleResponse"
+            },
+            "description": "Schedules",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Docket Public Get Response with potential list of Schedule Responses"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HouseAgendaCategoryPartnerGetResponse": {
+        "required": [
+          "CalendarCategoryID",
+          "ModificationDate"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarID": {
+            "type": "integer",
+            "description": "Calendar ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarCategoryTypeID": {
+            "type": "integer",
+            "description": "Calendar Category Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CategoryCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Category Code",
+            "nullable": true
+          },
+          "CategoryType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Category Type",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Calendar Category Type Description",
+            "nullable": true
+          },
+          "PluralDescription": {
+            "type": "string",
+            "description": "Calendar Category Type Description if plural",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Calendar Category Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "DisplayType": {
+            "type": "boolean",
+            "description": "Display Calendar Category Type",
+            "nullable": true
+          },
+          "IsLegislationCategory": {
+            "type": "boolean",
+            "description": "Legislation Indicator",
+            "nullable": true
+          },
+          "IsPrint": {
+            "type": "boolean",
+            "description": "Printable Indicator",
+            "nullable": true
+          },
+          "CalendarCategoryID": {
+            "type": "integer",
+            "description": "Calendar Category unique identifier",
+            "format": "int32"
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "modification date",
+            "format": "date-time"
+          },
+          "Agendas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgendaPartnerGetResponse"
+            },
+            "description": "Listing of Agendas",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "House Agenda Categories Partner Get Response"
+      },
+      "HouseAgendaFilePartnerGetResponse": {
+        "required": [
+          "TextFormatID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarFileID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Files",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Calendar/Docket/Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Unique Identifier for Text format ID",
+            "format": "int32"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "File Generated",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "File Public",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "File Active",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "House Agenda File Response for Partner Display (May Not Need to be used at this Time)"
+      },
+      "HouseAgendaFilePublicGetResponse": {
+        "required": [
+          "TextFormatID"
+        ],
+        "type": "object",
+        "properties": {
+          "CalendarFileID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Files",
+            "format": "int32",
+            "nullable": true
+          },
+          "CalendarID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Calendar/Docket/Agenda",
+            "format": "int32",
+            "nullable": true
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Unique Identifier for Text format ID",
+            "format": "int32"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "File Generated",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "File Public",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "File Active",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "House Agenda File Response for Public Display (May Not Need to be used at this Time)"
+      },
+      "HouseAgendaPartnerGetResponse": {
+        "required": [
+          "Description",
+          "HouseAgendaDate",
+          "HouseAgendaID",
+          "HouseAgendaNumber",
+          "HouseAgendaType",
+          "ModificationDate",
+          "SessionID"
+        ],
+        "type": "object",
+        "properties": {
+          "HouseAgendaDate": {
+            "type": "string",
+            "description": "House Agenda Date",
+            "format": "date-time"
+          },
+          "MeetingTime": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Meeting Time",
+            "nullable": true
+          },
+          "HouseAgendaNumber": {
+            "type": "integer",
+            "description": "House Agenda Number to bwtween 1 or more House Agendas on the same day",
+            "format": "int32"
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "House Agenda Description"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is House Agenda for Public Consumption",
+            "nullable": true
+          },
+          "HouseAgendaType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "House Agenda Type"
+          },
+          "HouseAgendaTypeID": {
+            "type": "integer",
+            "description": "House Agenda Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code is always defaulted to H for House",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "Vote Room ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Meeting Notes/Comments",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Committee ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Committee Name",
+            "nullable": true
+          },
+          "ParentCommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Parent Committee Name",
+            "nullable": true
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Pending Change to Calendar",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Reference Number used for External reference to House Agenda",
+            "nullable": true
+          },
+          "IsProforma": {
+            "type": "boolean",
+            "description": "IsProforma to Calendar",
+            "nullable": true
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "House Agenda Deletion Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "HouseAgendaID": {
+            "type": "integer",
+            "description": "Unique identifier for House Agenda",
+            "format": "int32"
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "Date of last modification",
+            "format": "date-time"
+          },
+          "CommitteeMember": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommitteeMemberPartnerGetResponse"
+            },
+            "description": "List of Committee Members",
+            "nullable": true
+          },
+          "Staff": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StaffPartnerGetResponse"
+            },
+            "description": "List of Staff",
+            "nullable": true
+          },
+          "HouseAgendaCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HouseAgendaCategoryPartnerGetResponse"
+            },
+            "description": "List of House Agenda Categories",
+            "nullable": true
+          },
+          "HouseAgendaFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HouseAgendaFilePartnerGetResponse"
+            },
+            "description": "List of House Agenda Files",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Partner House Agenda"
+      },
+      "HouseAgendaPublicListGetResponse": {
+        "required": [
+          "Description",
+          "HouseAgendaDate",
+          "HouseAgendaID",
+          "HouseAgendaNumber",
+          "HouseAgendaType",
+          "SessionID"
+        ],
+        "type": "object",
+        "properties": {
+          "HouseAgendaDate": {
+            "type": "string",
+            "description": "House Agenda Date",
+            "format": "date-time"
+          },
+          "MeetingTime": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Meeting Time",
+            "nullable": true
+          },
+          "HouseAgendaNumber": {
+            "type": "integer",
+            "description": "House Agenda Number to bwtween 1 or more House Agendas on the same day",
+            "format": "int32"
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "House Agenda Description"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is House Agenda for Public Consumption",
+            "nullable": true
+          },
+          "HouseAgendaType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "House Agenda Type"
+          },
+          "HouseAgendaTypeID": {
+            "type": "integer",
+            "description": "House Agenda Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code is always defaulted to H for House",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "Vote Room ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Meeting Notes/Comments",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Committee ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Committee Name",
+            "nullable": true
+          },
+          "ParentCommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Parent Committee Name",
+            "nullable": true
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Pending Change to Calendar",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Reference Number used for External reference to House Agenda",
+            "nullable": true
+          },
+          "IsProforma": {
+            "type": "boolean",
+            "description": "IsProforma to Calendar",
+            "nullable": true
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "House Agenda Deletion Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "HouseAgendaID": {
+            "type": "integer",
+            "description": "House Agenda unique identifier",
+            "format": "int32"
+          },
+          "HouseAgendaFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HouseAgendaFilePublicGetResponse"
+            },
+            "description": "list of House Agenda Files for a specific Calendar",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object used for Public Display List of House Agenda"
+      },
+      "HouseAgendasPartnerGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HouseAgendaPartnerGetResponse"
+            },
+            "description": "list of House Agendas",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response used for Mulitple Partner House Agendas Get Details (includes ID and Modification Date)"
+      },
+      "HouseAgendasPublicListGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HouseAgendaPublicListGetResponse"
+            },
+            "description": "list of House Agendas",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response for Mulitple House Agendas Dispalyed Publicly"
+      },
+      "PatronPartnerGetResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Patron Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Display Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "ByRequest": {
+            "type": "boolean",
+            "description": "Is this draft by request of a state agency or entity ?",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Patron Response for Calendars, Dockets and House Agendas(Potentially)"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "PublicScheduleResponse": {
+        "type": "object",
+        "properties": {
+          "DisplaySequence": {
+            "type": "integer",
+            "description": "optional display sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "OwnerID": {
+            "type": "integer",
+            "description": "id for schedule owner",
+            "format": "int32",
+            "nullable": true
+          },
+          "OwnerName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "owner's name",
+            "nullable": true
+          },
+          "ScheduleTypeID": {
+            "type": "integer",
+            "description": "id for schedule type",
+            "format": "int32",
+            "nullable": true
+          },
+          "ScheduleType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Schedule Type Name",
+            "nullable": true
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "id for vote room",
+            "format": "int32",
+            "nullable": true
+          },
+          "RoomDescription": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Room Description",
+            "nullable": true
+          },
+          "ScheduleDate": {
+            "type": "string",
+            "description": "schedule Date",
+            "format": "date"
+          },
+          "ScheduleTime": {
+            "type": "string",
+            "description": "schedule Time",
+            "format": "time",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Comments",
+            "nullable": true
+          },
+          "IsCancelled": {
+            "type": "boolean",
+            "description": "is this canceled"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "is this publicly viewable"
+          },
+          "LinkURL": {
+            "type": "string",
+            "description": "LinkURL",
+            "nullable": true
+          },
+          "ScheduleID": {
+            "type": "integer",
+            "description": "id for schedule",
+            "format": "int32"
+          },
+          "VersionSequence": {
+            "type": "integer",
+            "description": "Version Sequence number - used for iCalendar (ICS) file versioning; automatically incremented by database when updates are made",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Schedule"
+      },
+      "StaffPartnerGetResponse": {
+        "type": "object",
+        "properties": {
+          "StaffID": {
+            "type": "integer",
+            "description": "Database Unique Indentifier for Staff",
+            "format": "int32",
+            "nullable": true
+          },
+          "AffiliationID": {
+            "type": "integer",
+            "description": "Database Unique Indentifier for Affiliation",
+            "format": "int32",
+            "nullable": true
+          },
+          "StaffRoleTypeID": {
+            "type": "integer",
+            "description": "Database Unique Indentifier for Staff Role Type",
+            "format": "int32",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Database Unique Indentifier for Identity",
+            "format": "int32",
+            "nullable": true
+          },
+          "FullName": {
+            "type": "string",
+            "description": "Staff Full Name",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Staff Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Staff Public Viewable",
+            "nullable": true
+          },
+          "EffectiveDate": {
+            "type": "string",
+            "description": "Staff Effective Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "Modification Date",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Staff Partner Get Response"
+      },
+      "VoteMemberPartnerGetResponse": {
+        "required": [
+          "ModificationDate"
+        ],
+        "type": "object",
+        "properties": {
+          "MemberID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Member",
+            "format": "int32"
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "ResponseCode": {
+            "type": "string",
+            "description": "Response Code",
+            "nullable": true
+          },
+          "VoteMemberID": {
+            "type": "integer",
+            "description": "Vote Member ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "modification date",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Vote Member used for Agenda Items"
+      },
+      "VoteMemberPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "MemberID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Member",
+            "format": "int32"
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "ResponseCode": {
+            "type": "string",
+            "description": "Response Code",
+            "nullable": true
+          },
+          "VoteMemberID": {
+            "type": "integer",
+            "description": "Vote Member ID",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Agenda Item response"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller used for ONLY reading (not writing) data (Contains GET Verbs)"
+    }
+  ]
+}

@@ -1,0 +1,933 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LegislationEvent",
+    "description": "Handles all Legislation Event information (e.g. Bill History)\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/LegislationEvent/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationEvent/api/getlegislationeventbyidasync/{legislationEventID}": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Events by unique identifier",
+        "parameters": [
+          {
+            "name": "legislationEventID",
+            "in": "path",
+            "description": "Unique identifier for Legislation Event",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicLegislationEventsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationEvent/api/getlegislationeventbylegislationidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Events by Legislation",
+        "parameters": [
+          {
+            "name": "legislationID",
+            "in": "query",
+            "description": "Unique identifier for Legislation",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "reconsiderationAction",
+            "in": "query",
+            "description": "Reconsideration action event code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicLegislationEventsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationEvent/api/getlegislationeventtypereferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Event Types",
+        "parameters": [
+          {
+            "name": "isSearchable",
+            "in": "query",
+            "description": "Is this searchable?",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "isPublic",
+            "in": "query",
+            "description": "Is this public?",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "isActive",
+            "in": "query",
+            "description": "Is this active?",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "LegislationChamberCode",
+            "in": "query",
+            "description": "Legislation Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CalendarCategoryTypeID",
+            "in": "query",
+            "description": "Unique identifier for Calendar Category Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationEventTypesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationEvent/api/getactortypereferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Actor Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorTypesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationEvent/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationEvent/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActorTypeReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "ActorTypeID": {
+            "type": "integer",
+            "description": "Actor Type unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Description/Name of the ID",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing LIS Legislation events reference information"
+      },
+      "ActorTypesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActorTypeReferenceResponse"
+            },
+            "description": "list of contacts",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS contacts (using ContactResponse). If no valid response could be obtained, Success boolean will be false and additional information can be found in the FailureMessage string."
+      },
+      "CalendarActionReferenceResponse": {
+        "required": [
+          "ActionReferenceID"
+        ],
+        "type": "object",
+        "properties": {
+          "ActionReferenceID": {
+            "type": "integer",
+            "description": "Calendar Action unique identifier",
+            "format": "int32"
+          },
+          "IsMandatory": {
+            "type": "boolean",
+            "description": "is this action reference required? true/false"
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence for action reference",
+            "format": "int32"
+          },
+          "ReferenceText": {
+            "type": "string",
+            "description": "reference text for the action reference, e.g. \"On Motion Of \"",
+            "nullable": true
+          },
+          "CalendarActionID": {
+            "type": "integer",
+            "description": "unique identifier for associated calendar action",
+            "format": "int32"
+          },
+          "ActionReferenceTypeID": {
+            "type": "integer",
+            "description": "unique identifier for associated action reference type",
+            "format": "int32"
+          },
+          "ActionReferenceType": {
+            "type": "string",
+            "description": "name for for associated action reference type e.g. Member",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Calendar Action \"Action Reference\" Reference Response"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationEventTypeReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationEventTypeID": {
+            "type": "integer",
+            "description": "Legislation Event Type unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "EventCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Event Code",
+            "nullable": true
+          },
+          "LegislationDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Description for Legislation usage",
+            "nullable": true
+          },
+          "CommitteeDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Description for Committee usage",
+            "nullable": true
+          },
+          "CalendarDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Description for Calendar usage",
+            "nullable": true
+          },
+          "JournalDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Description for Journal usage",
+            "nullable": true
+          },
+          "VoteDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Description for Vote usage",
+            "nullable": true
+          },
+          "LegislationChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Legislation Chamber Code",
+            "nullable": true
+          },
+          "ActorTypeID": {
+            "type": "integer",
+            "description": "Actor Type Identifier",
+            "format": "int32"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Public Event Type"
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is Active Event Type"
+          },
+          "CommitteeComplete": {
+            "type": "boolean",
+            "description": "Is Committee Complete"
+          },
+          "IsPassed": {
+            "type": "boolean",
+            "description": "Has Event Passed?",
+            "nullable": true
+          },
+          "ActionReferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarActionReferenceResponse"
+            },
+            "description": "optional list of Action References",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing LIS Legislation events reference information.\r\nNote: For Internal Use Only"
+      },
+      "LegislationEventTypesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationEventTypeReferenceResponse"
+            },
+            "description": "list of LegislationEventTypeReferenceResponse",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS LegislationEventTypesReferences (using LegislationEventTypeReferenceResponse)"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "PublicEventReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "EventReferenceID": {
+            "type": "integer",
+            "description": "Unique identifier for Event Reference",
+            "format": "int32",
+            "nullable": true
+          },
+          "ReferenceText": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Event Reference Text",
+            "nullable": true
+          },
+          "ReferenceID": {
+            "type": "integer",
+            "description": "Unique identifier for Reference",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationEventID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Event",
+            "format": "int32",
+            "nullable": true
+          },
+          "ActionReferenceTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Action Reference Type",
+            "format": "int32",
+            "nullable": true
+          },
+          "ActionReferenceType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Action Reference Text",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a public Legislation Event Reference"
+      },
+      "PublicLegislationEventResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationEventID": {
+            "type": "integer",
+            "description": "Legislation event unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationEventTypeID": {
+            "type": "integer",
+            "description": "Legislation Event Type Identifer (Unique for each Biennial)",
+            "format": "int32",
+            "nullable": true
+          },
+          "EventCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Event Code (can be used in place of Legislation Event Type ID)",
+            "nullable": true
+          },
+          "EventDate": {
+            "type": "string",
+            "description": "The Date the Event occurred",
+            "format": "date-time"
+          },
+          "DeletionDate": {
+            "type": "string",
+            "description": "The Date the Event is Deleted",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Legislation Description",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation Identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "VoteID": {
+            "type": "integer",
+            "description": "VoteID",
+            "format": "int32",
+            "nullable": true
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Determines whether the enaction of the legislation is standard, emergency, or other",
+            "nullable": true
+          },
+          "EffectiveTypeID": {
+            "type": "integer",
+            "description": "ID of EffectiveType.",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Human Readable Legislation Identifier",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Human readable code for the Session that the event happened in",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is Public Event"
+          },
+          "IsPassed": {
+            "type": "boolean",
+            "description": "Has Event Passed?",
+            "nullable": true
+          },
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "Unique Identifier for Legislation Event Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "ReferenceID": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Originating System code used for identifying this Event in that system",
+            "nullable": true
+          },
+          "ReferenceNumber": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Originating system number (e.g. Vote #, LD #, Committee #) that correlates with the ReferenceType",
+            "nullable": true
+          },
+          "ReferenceTypeID": {
+            "type": "integer",
+            "description": "unique identifier for the ReferenceType",
+            "format": "int32"
+          },
+          "ReferenceType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "name for ReferenceType (e.g. LegislationText, Vote, Committee, Minutes)",
+            "nullable": true
+          },
+          "Status": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Status Name",
+            "nullable": true
+          },
+          "ActorID": {
+            "type": "integer",
+            "description": "unique identifier for the ActorType",
+            "format": "int32",
+            "nullable": true
+          },
+          "ActorType": {
+            "type": "string",
+            "description": "The subject taking the event action (i.e House/Senate/Conference/Governor)",
+            "nullable": true
+          },
+          "EventReferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicEventReferenceResponse"
+            },
+            "description": "List of public Event References",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a public Legislation Event"
+      },
+      "PublicLegislationEventsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "LegislationEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicLegislationEventResponse"
+            },
+            "description": "List of public Legislation Events",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of public Legislation Events"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller used for ONLY reading (not writing) data (Contains GET Verbs)"
+    }
+  ]
+}

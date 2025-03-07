@@ -1,0 +1,1244 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Legislation Communication Service (LegislationCommunications)",
+    "description": "Legislation Communication Service is for getting and writing Communication information between GA chambers\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/LegislationCommunications/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationCommunications/api/getlegislationcommunicationslistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Communications",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "communicationType",
+            "in": "query",
+            "description": "Communication Type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicCommunicationsList"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationCommunications/api/getcommunicationcategoryreferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Communication Categories",
+        "parameters": [
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunicationCategoryTypesReference"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationCommunications/api/getlegislationcommunicationsbyidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a Legislation Communication",
+        "parameters": [
+          {
+            "name": "communicationID",
+            "in": "query",
+            "description": "unique identifier for Communication",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session Code (e.g. 20181)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber Code (e.g. H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IsActive",
+            "in": "query",
+            "description": "is the record marked as active?",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "communicationTypeID",
+            "in": "query",
+            "description": "unique identifier for Communication Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "communicationType",
+            "in": "query",
+            "description": "Communication Type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "communicationNumber",
+            "in": "query",
+            "description": "Communication number",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "communicationDate",
+            "in": "query",
+            "description": "Communication date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "referenceNumber",
+            "in": "query",
+            "description": "Communication reference number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "voteNumber",
+            "in": "query",
+            "description": "Vote number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "voteID",
+            "in": "query",
+            "description": "Unique identifier for Vote",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicGetCommunicationsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationCommunications/api/getlegislationcommunicationsbloburlasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a Legislation Communication Files",
+        "parameters": [
+          {
+            "name": "communicationID",
+            "in": "query",
+            "description": "unique identifier for Communication",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session Code (e.g. 20181)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "communicationTypeID",
+            "in": "query",
+            "description": "unique identifier for Communication Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "communicationType",
+            "in": "query",
+            "description": "Communication Type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "communicationNumber",
+            "in": "query",
+            "description": "Communication number",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "communicationDate",
+            "in": "query",
+            "description": "Communication date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "referenceNumber",
+            "in": "query",
+            "description": "Unique number referencing this communication use by other organizations",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "textFormat",
+            "in": "query",
+            "description": "Text Format",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicGetCommunicationFilesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationCommunications/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationCommunications/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CommunicationCategoryTypeReference": {
+        "type": "object",
+        "properties": {
+          "CommunicationCategoryTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication Category Type",
+            "format": "int32"
+          },
+          "CategoryCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Category code",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Category description",
+            "nullable": true
+          },
+          "PluralDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Plural Communication description",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Communication Category Type"
+      },
+      "CommunicationCategoryTypesReference": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommunicationCategoryTypeReference"
+            },
+            "description": "list of Communication Category Types",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Communication Category Types"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Patron": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Patron Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Display Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "ByRequest": {
+            "type": "boolean",
+            "description": "Is this patronage by request of a state agency/entity?",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Patron"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "PublicCommunicationFile": {
+        "type": "object",
+        "properties": {
+          "CommunicationFileID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication File",
+            "format": "int32"
+          },
+          "CommunicationID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication",
+            "format": "int32"
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Unique identifier for Text Format",
+            "format": "int32"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "Is this generated?"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this public?"
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is this active?"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Public Communication File"
+      },
+      "PublicCommunicationsList": {
+        "type": "object",
+        "properties": {
+          "CommunicationID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication",
+            "format": "int32"
+          },
+          "CommunicationDate": {
+            "type": "string",
+            "description": "Communication date",
+            "format": "date-time"
+          },
+          "CommunicationNumber": {
+            "type": "integer",
+            "description": "Communication Number",
+            "format": "int32"
+          },
+          "ReferenceNumber": {
+            "type": "string",
+            "description": "Reference Number",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this Communication public?"
+          },
+          "CommunicationTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication Type",
+            "format": "int32"
+          },
+          "CommunicationType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Communication Type name",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Unique identifier for Session",
+            "format": "int32"
+          },
+          "ShowSignatureNote": {
+            "type": "boolean",
+            "description": "Show Signature Note",
+            "nullable": true
+          },
+          "CommunicationFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicCommunicationFile"
+            },
+            "description": "List of Public Communication Files",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Public Communication Files"
+      },
+      "PublicGetCommunicationCategoryResponse": {
+        "type": "object",
+        "properties": {
+          "CommunicationID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommunicationCategoryTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication Category Type",
+            "format": "int32",
+            "nullable": true
+          },
+          "CategoryCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Category code",
+            "nullable": true
+          },
+          "CategoryDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Category description",
+            "nullable": true
+          },
+          "MinutesSummary": {
+            "type": "string",
+            "description": "Minutes Summary (built from Legislation Communications)",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "PluralDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Plural Communication description",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 2500,
+            "type": "string",
+            "description": "Description",
+            "nullable": true
+          },
+          "CommunicationCategoryID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication Category",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommunicationLegislation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicGetCommunicationLegislationResponse"
+            },
+            "description": "List of Communication Legislation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Public Communication Category"
+      },
+      "PublicGetCommunicationFilesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicCommunicationFile"
+            },
+            "description": "List of Public Communication Files",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Public Communication Files"
+      },
+      "PublicGetCommunicationLegislationResponse": {
+        "type": "object",
+        "properties": {
+          "CommunicationCategoryID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication Category",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation",
+            "format": "int32"
+          },
+          "LegislationNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation key",
+            "format": "int32"
+          },
+          "LegislationDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Legislation description",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is this active?",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeReferredName": {
+            "type": "string",
+            "description": "Committee Referred Name",
+            "nullable": true
+          },
+          "EventCode": {
+            "type": "string",
+            "description": "Event code",
+            "nullable": true
+          },
+          "DocumentCode": {
+            "type": "string",
+            "description": "Document code",
+            "nullable": true
+          },
+          "LDNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "LD number",
+            "nullable": true
+          },
+          "DraftTitle": {
+            "type": "string",
+            "description": "Draft Title",
+            "nullable": true
+          },
+          "VoteID": {
+            "type": "integer",
+            "description": "Unique identifier for Vote",
+            "format": "int32",
+            "nullable": true
+          },
+          "VoteNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Vote number",
+            "nullable": true
+          },
+          "Suffix": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Legislation suffix",
+            "nullable": true
+          },
+          "EffectiveTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Effective Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Effective Type",
+            "nullable": true
+          },
+          "IsCandidate": {
+            "type": "boolean",
+            "description": "Does this communication include bills that are a candidate?",
+            "nullable": true
+          },
+          "CommunicationLegislationID": {
+            "type": "integer",
+            "description": "Unique identifier for CommunicationLegislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Patron"
+            },
+            "description": "List of Patrons",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Public Get Communication Legislation"
+      },
+      "PublicGetCommunicationResponse": {
+        "type": "object",
+        "properties": {
+          "CommunicationDate": {
+            "type": "string",
+            "description": "Communication date",
+            "format": "date-time"
+          },
+          "CommunicationNumber": {
+            "type": "integer",
+            "description": "Communication #",
+            "format": "int32"
+          },
+          "ReferenceNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Reference #",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this public?"
+          },
+          "CommunicationTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication Type",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommunicationType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Communication Type",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Unique identifier for Committee",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "type": "string",
+            "description": "Committee Name",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Unique identifier for Session",
+            "format": "int32",
+            "nullable": true
+          },
+          "DocumentCode": {
+            "type": "string",
+            "description": "Document Code",
+            "nullable": true
+          },
+          "SessionCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "ShowSignatureNote": {
+            "type": "boolean",
+            "description": "Show Signature Note",
+            "nullable": true
+          },
+          "CommunicationID": {
+            "type": "integer",
+            "description": "Unique identifier for Communication",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommunicationCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicGetCommunicationCategoryResponse"
+            },
+            "description": "List of Communication Categories",
+            "nullable": true
+          },
+          "CommunicationFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicCommunicationFile"
+            },
+            "description": "List of Communication Files",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Public Get Communication"
+      },
+      "PublicGetCommunicationsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicGetCommunicationResponse"
+            },
+            "description": "list of Public Get Communications",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Public Get Communications"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    },
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    }
+  ]
+}

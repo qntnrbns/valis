@@ -1,0 +1,2062 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Legislation",
+    "description": "Handles all high-level Legislation information, including search capabilities\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Legislation/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getlegislationlistasync": {
+      "post": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Public Legislation",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "AdvancedSearch",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getlegislationbyidasync/{legislationID}": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Public Legislation using unique identifier",
+        "parameters": [
+          {
+            "name": "legislationID",
+            "in": "path",
+            "description": "Unique identifier for Legislation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getlegislationstatuslistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation Statuses",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsReferencesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getlegislationsessionlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Public Legislation by Session",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (eg. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsSessionResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getlegislationamendmentlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Public Legislation with Amendments by Session",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (eg. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber Code (e.g. H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationAmendmentsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getlegislationidslistasync": {
+      "post": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation IDs",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "AdvancedSearch",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvancedSearch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationIdsListResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getconferencelegislationlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Conference Legislation",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber Code (e.g. H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberID",
+            "in": "query",
+            "description": "Unique identifier for Member",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConferenceLegislationsList"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/getlegislationbylegislationidsasync": {
+      "post": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Legislation based on set of Legislation IDs",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "LegislationIdsListResponse",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationIdsListResponse"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationIdsListResponse"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationIdsListResponse"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegislationIdsListResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Legislation/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdvancedSearch": {
+        "type": "object",
+        "properties": {
+          "EventControlID": {
+            "type": "integer",
+            "description": "Unique identifier for Event Control",
+            "format": "int32",
+            "nullable": true
+          },
+          "StartDate": {
+            "type": "string",
+            "description": "Start Date associated with status dropdown",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EndDate": {
+            "type": "string",
+            "description": "End Date associated with status dropdown",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EventStartDate": {
+            "type": "string",
+            "description": "End Event Date, associated with Event Control dropdown",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EventEndDate": {
+            "type": "string",
+            "description": "Start Event Date, associated with Event Control dropdown",
+            "format": "date-time",
+            "nullable": true
+          },
+          "IntroductionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "LegislationTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Bill description",
+            "nullable": true
+          },
+          "Chambercode": {
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationCategoryID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Category",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Unique identifier for Committee",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Unique identifier for Session",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "type": "integer",
+            "description": "Session code (e.g. 20181)",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationEventTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Event Type",
+            "format": "int32",
+            "nullable": true
+          },
+          "SummaryLength": {
+            "type": "integer",
+            "description": "Limitation on summary length",
+            "format": "int32",
+            "nullable": true
+          },
+          "PatronTypes": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "List of Patron Types",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Unique identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "SubjectIndexID": {
+            "type": "integer",
+            "description": "Unique identifier for Subject Index",
+            "format": "int32",
+            "nullable": true
+          },
+          "MostFrequent": {
+            "type": "boolean",
+            "description": "Return most frequently accessed bills?"
+          },
+          "IsPending": {
+            "type": "boolean",
+            "description": "Return pending bills?"
+          },
+          "KeywordExpression": {
+            "type": "string",
+            "description": "Keyword search - supports operators and parentheses",
+            "nullable": true
+          },
+          "KeywordLocation": {
+            "type": "string",
+            "description": "Where to perform the Keyword search (Summary/Bill Text)",
+            "nullable": true
+          },
+          "KeywordSummaryVersionID": {
+            "type": "integer",
+            "description": "Unique identifier of Keyword Summary Version",
+            "format": "int32",
+            "nullable": true
+          },
+          "KeywordLegislationVersionID": {
+            "type": "integer",
+            "description": "Unique identifier of Keyword Legislation Version",
+            "format": "int32",
+            "nullable": true
+          },
+          "KeywordUseGlobalSessionSearch": {
+            "type": "boolean",
+            "description": "Should the keyword search search across all sessions?"
+          },
+          "SkipLegislationTextCalls": {
+            "type": "boolean",
+            "description": "Skip searching legislation text?",
+            "nullable": true
+          },
+          "CurrentStatus": {
+            "type": "boolean",
+            "description": "Search by only the current bill status?",
+            "nullable": true
+          },
+          "Keywords": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyWord"
+            },
+            "description": "List of KeyWord search objects",
+            "nullable": true
+          },
+          "ExcludeFailed": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "ChapterNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Chapter Number",
+            "nullable": true
+          },
+          "LegislationNumbers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationNumberResponse"
+            },
+            "description": "List of Legislative Numbers",
+            "nullable": true
+          },
+          "LegislationIDs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationID"
+            },
+            "description": "List of Legislation IDs",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for performing a Legislation search"
+      },
+      "AmendmentResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Legislation Text unique identifier",
+            "format": "int32"
+          },
+          "LegislationVersionID": {
+            "type": "integer",
+            "description": "Legislation Version unique identifier",
+            "format": "int32"
+          },
+          "LegislationVersion": {
+            "type": "string",
+            "description": "Legislative Version",
+            "nullable": true
+          },
+          "TextDispositionID": {
+            "type": "integer",
+            "description": "unique identifier for Text Disposition (e.g. 1=Offered, 2=Recommended, 3=Reported, etc)",
+            "format": "int32"
+          },
+          "TextDisposition": {
+            "type": "string",
+            "description": "Text Disposition (e.g. Offered, Recommended, Reported, etc)",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Active for use?"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Public Consumption?"
+          },
+          "DocumentCode": {
+            "type": "string",
+            "description": "document code",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "Amendment ChamberCode",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "LegislationText Description",
+            "nullable": true
+          },
+          "LDNumber": {
+            "type": "string",
+            "description": "LD Number",
+            "nullable": true
+          },
+          "VersionDate": {
+            "type": "string",
+            "description": "Version Date",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Amendment Response"
+      },
+      "ConferenceLegislationList": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation Number (Numerical Part of the Legislation Number)",
+            "nullable": true
+          },
+          "FullNumber": {
+            "type": "string",
+            "description": "Full Legislation Number",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Legislation Description",
+            "nullable": true
+          },
+          "IntroductionDate": {
+            "type": "string",
+            "description": "Introduction Date",
+            "format": "date-time"
+          },
+          "OfferedDate": {
+            "type": "string",
+            "description": "Offered Date",
+            "format": "date-time"
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "Chamber Code Example: H = House or S = Summary",
+            "nullable": true
+          },
+          "LegislationTypeCode": {
+            "type": "string",
+            "description": "Legislation Type Code",
+            "nullable": true
+          },
+          "LegislationClassID": {
+            "type": "integer",
+            "description": "Legislation Class ID",
+            "format": "int32"
+          },
+          "LegislationClass": {
+            "type": "string",
+            "description": "Legislation Class",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation Key",
+            "format": "int32"
+          },
+          "LegislationStatus": {
+            "type": "string",
+            "description": "Legislation Status",
+            "nullable": true
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Effective Type",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "SessionName": {
+            "type": "string",
+            "description": "Session Name",
+            "nullable": true
+          },
+          "IsPrefile": {
+            "type": "boolean",
+            "description": "Is Prefiled Legislation"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Conference Legislation Details"
+      },
+      "ConferenceLegislationsList": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConferenceLegislationList"
+            },
+            "description": "list of conference legislation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "conference legislation list"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "KeyWord": {
+        "type": "object",
+        "properties": {
+          "Keyword": {
+            "type": "string",
+            "description": "keyword string to search on",
+            "nullable": true
+          },
+          "Operator": {
+            "type": "string",
+            "description": "operator (defaults to OR, but can be AND instead)",
+            "nullable": true
+          },
+          "Keywords": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyWord"
+            },
+            "description": "if this object serves as placeholder for parentheses, all KeyWord objects within this List are the elements (e.g. A and B)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Compound Keyword search ... and now supports major combinational concepts with operator and nested List of KeyWord objects (for parentheses)"
+      },
+      "LegislationAmendmentResponse": {
+        "type": "object",
+        "properties": {
+          "SessionID": {
+            "type": "integer",
+            "description": "Unique identifier for Session",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "LegislationClassID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Class",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Legislation Description/Catchline",
+            "nullable": true
+          },
+          "LegislationTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "OfferedDate": {
+            "type": "string",
+            "description": "Legislation Offered date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "IntroductionDate": {
+            "type": "string",
+            "description": "Legislation Introduction date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "LegislationTypeCode": {
+            "type": "string",
+            "description": "Legislation Type Code description",
+            "nullable": true
+          },
+          "FullNumber": {
+            "type": "string",
+            "description": "Full Number of the bill",
+            "nullable": true
+          },
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislative Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation Key (Numerical Part of the Legislation Number)",
+            "format": "int32"
+          },
+          "LegislationStatus": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Legislative Status",
+            "nullable": true
+          },
+          "LegislationSummary": {
+            "type": "string",
+            "description": "Legislation Summary",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "The ID of the latest legislation text for this piece of legislation",
+            "format": "int32"
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Determines whether the enaction of the legislation is standard/emergency/other",
+            "nullable": true
+          },
+          "EffectiveTypeID": {
+            "type": "integer",
+            "description": "ID of EffectiveType",
+            "format": "int32"
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Tells whether a piece of legislation text on this legislation has any unpublished changes"
+          },
+          "SummaryVersion": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Summary Version",
+            "nullable": true
+          },
+          "SessionName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Session Name (ex. 2018 Regular Session)",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Committee Name (ex. Commerce and Labor)",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Committee ID",
+            "format": "int32"
+          },
+          "ParentCommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Parent Committee Name",
+            "nullable": true
+          },
+          "CommitteeNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Committee Number",
+            "nullable": true
+          },
+          "Amendments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AmendmentResponse"
+            },
+            "description": "List of Amendments on the associated Legislation",
+            "nullable": true
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationPatron"
+            },
+            "description": "List of Patrons on the associated Legislation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation with Amendments"
+      },
+      "LegislationAmendmentsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationAmendmentResponse"
+            },
+            "description": "list of legislation amendments",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation with Amendments Model"
+      },
+      "LegislationID": {
+        "type": "object",
+        "properties": {
+          "LegislationId": {
+            "type": "integer",
+            "description": "LegislationID",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Used to separate out legislation IDs"
+      },
+      "LegislationIdListResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation",
+            "format": "int32"
+          },
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "Unique Identifier for Legislation Event Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "unique identifier for Session",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "type": "integer",
+            "description": "Session code (e.g. 20181)",
+            "format": "int32",
+            "nullable": true
+          },
+          "SearchText": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationSearchText"
+            },
+            "description": "List of Search Text (contains version results)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Legislation ID Search"
+      },
+      "LegislationIdsListResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "SortBy": {
+            "type": "string",
+            "description": "Which column to sort legislation by",
+            "nullable": true
+          },
+          "DeleteAllLegislationCache": {
+            "type": "boolean",
+            "description": "Should delete from cache all legislation?",
+            "nullable": true
+          },
+          "LegislationIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationIdListResponse"
+            },
+            "description": "List of Legislation IDs",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Legislation IDs"
+      },
+      "LegislationNumberResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationNumber": {
+            "type": "string",
+            "description": "LegislationNumber",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation Number Response"
+      },
+      "LegislationPatron": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Patron Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Display Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Patron Sequence # (e.g. 1001 ==> Chief Patron)",
+            "format": "int32"
+          },
+          "ByRequest": {
+            "type": "boolean",
+            "description": "Is this by request of an entity?",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationReferencesResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "Unique Identifier for Legislation Status",
+            "format": "int32"
+          },
+          "Name": {
+            "type": "string",
+            "description": "Legislation Status Common Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "type": "string",
+            "description": "Legislation Status Display Name",
+            "nullable": true
+          },
+          "LegislationVersionID": {
+            "type": "integer",
+            "description": "Unique Identifier for Legislation Version",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Legislation Status"
+      },
+      "LegislationResponse": {
+        "type": "object",
+        "properties": {
+          "SessionID": {
+            "type": "integer",
+            "description": "Unique identifier for Session",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "LegislationClassID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Class",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Legislation Description/Catchline",
+            "nullable": true
+          },
+          "LegislationTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "OfferedDate": {
+            "type": "string",
+            "description": "Legislation Offered date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "IntroductionDate": {
+            "type": "string",
+            "description": "Legislation Introduction date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "LegislationTypeCode": {
+            "type": "string",
+            "description": "Legislation Type Code description",
+            "nullable": true
+          },
+          "FullNumber": {
+            "type": "string",
+            "description": "Full Number of the bill",
+            "nullable": true
+          },
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislative Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation Key (Numerical Part of the Legislation Number)",
+            "format": "int32"
+          },
+          "LegislationStatus": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Legislative Status",
+            "nullable": true
+          },
+          "CandidateDate": {
+            "type": "string",
+            "description": "Legislative CandidateDate",
+            "nullable": true
+          },
+          "LegislationSummary": {
+            "type": "string",
+            "description": "Legislation Summary",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "The ID of the latest legislation text for this piece of legislation",
+            "format": "int32"
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Determines whether the enaction of the legislation is standard/emergency/other",
+            "nullable": true
+          },
+          "EffectiveTypeID": {
+            "type": "integer",
+            "description": "ID of EffectiveType",
+            "format": "int32"
+          },
+          "PendingChange": {
+            "type": "boolean",
+            "description": "Tells whether a piece of legislation text on this legislation has any unpublished changes"
+          },
+          "SummaryVersion": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Summary Version",
+            "nullable": true
+          },
+          "SessionName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Session Name (ex. 2018 Regular Session)",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Committee Name Ex. Commerce and Labor",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Committee ID",
+            "format": "int32"
+          },
+          "ParentCommitteeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Parent Committee Name",
+            "nullable": true
+          },
+          "ChapterNumber": {
+            "type": "string",
+            "description": "Chapter number for the acts of assembly",
+            "nullable": true
+          },
+          "CommitteeNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Committee Number",
+            "nullable": true
+          },
+          "VersionDate": {
+            "type": "string",
+            "description": "Version Date",
+            "nullable": true
+          },
+          "DocumentCode": {
+            "type": "string",
+            "description": "Document Code",
+            "nullable": true
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Patron"
+            },
+            "description": "List of Patrons on the associated Legislation",
+            "nullable": true
+          },
+          "HousePassageDate": {
+            "type": "string",
+            "description": "House Passage Date",
+            "nullable": true
+          },
+          "SenatePassageDate": {
+            "type": "string",
+            "description": "Senate Passage Date",
+            "nullable": true
+          },
+          "IsComplete": {
+            "type": "boolean"
+          },
+          "Sessions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionResponse"
+            },
+            "description": "List of Sessions on the associated Legislation",
+            "nullable": true
+          },
+          "SearchText": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationSearchText"
+            },
+            "description": "searchText list contains version results",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation Response, inherit from LegislationModel"
+      },
+      "LegislationSearchText": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Text",
+            "format": "int32"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Legislation Version description",
+            "nullable": true
+          },
+          "DocumentCode": {
+            "type": "string",
+            "description": "Legislation Document code",
+            "nullable": true
+          },
+          "countMatches": {
+            "type": "integer",
+            "description": "Count of Keyword Matches",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Legislation Version Keyword Searching"
+      },
+      "LegislationSessionResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Legislation Number (Unique for each Biennial)",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "Legislation Description/Catchline",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "LegislationTypeCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Legislation Type Code",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation Key (Numerical Part of the Legislation Number)",
+            "format": "int32"
+          },
+          "LegislationStatus": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Legislative Status",
+            "nullable": true
+          },
+          "Patrons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Patron"
+            },
+            "description": "List of Patrons on the associated Legislation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "LegislationSessionResponse"
+      },
+      "LegislationsReferencesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationReferencesResponse"
+            },
+            "description": "List of Legislation Statuses",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Legislation Statuses"
+      },
+      "LegislationsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationResponse"
+            },
+            "description": "list of legislation",
+            "nullable": true
+          },
+          "SearchCriteria": {
+            "type": "string",
+            "description": "Search JSON used to product these results",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "legislations response"
+      },
+      "LegislationsSessionResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationSessionResponse"
+            },
+            "description": "list of Legislations",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "LegislationsSessionResponse"
+      },
+      "Patron": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Patron Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Display Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Patron Sequence # (e.g. 1001 ==> Chief Patron)",
+            "format": "int32"
+          },
+          "IsIntroducing": {
+            "type": "boolean",
+            "description": "Is this patron introducing the bill?",
+            "nullable": true
+          },
+          "ByRequest": {
+            "type": "boolean",
+            "description": "Is this by request of an entity?",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Legislation Patron"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "SessionResponse": {
+        "type": "object",
+        "properties": {
+          "SessionID": {
+            "type": "integer",
+            "description": "unique identifer for session",
+            "format": "int32"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session Code identifier (e.g. 20181 for 2018 Regular Session)",
+            "nullable": true
+          },
+          "IsPrefile": {
+            "type": "boolean",
+            "description": "Is Prefiled Legislation"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Session object to be returned within Legislation"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}

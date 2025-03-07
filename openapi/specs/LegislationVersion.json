@@ -1,0 +1,564 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LegislationVersion",
+    "description": "Handles all Version information of Legislation\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "helpdesk@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/LegislationVersion/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationVersion/api/getlegislationversionbybillnumberasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets LIS Legislation Version for a particular Bill Number and a particular session)",
+        "parameters": [
+          {
+            "name": "BillNumber",
+            "in": "query",
+            "description": "Bill number (eg., \"HB12\")",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (eg. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsVersionResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationVersion/api/getlegislationversionbylegislationidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets LIS Legislation Version for a particular LegislationID or LegislationIDs (multiple)",
+        "parameters": [
+          {
+            "name": "legislationID",
+            "in": "query",
+            "description": "Unique identifier for Legislation",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "legislationIDs",
+            "in": "query",
+            "description": "list of unique identifiers for Legislation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationsVersionResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationVersion/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationVersion/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "File": {
+        "type": "object",
+        "properties": {
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Legislation Text ID",
+            "format": "int32"
+          },
+          "TextFormatID": {
+            "type": "integer",
+            "description": "Text Format ID",
+            "format": "int32"
+          },
+          "TextFormat": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Text Format",
+            "nullable": true
+          },
+          "FileURL": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "File URL",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation Version File"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegislationsVersionResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegislationVersionResponse"
+            },
+            "description": "list of Legislation Version",
+            "nullable": true
+          },
+          "SearchCriteria": {
+            "type": "string",
+            "description": "Search JSON used to product these results",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS Legislation Version. If no valid response could be obtained, Success boolean will be false and additional information can be found in the FailureMessage string."
+      },
+      "LegislationVersionResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation unique identifier",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Legislation Number (Unique for each Biennial)",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "ChamberCode, H=House, S=Senate",
+            "nullable": true
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session ID",
+            "format": "int32"
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Legislation Text Id",
+            "format": "int32"
+          },
+          "DraftDate": {
+            "type": "string",
+            "description": "Draft Date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "DocumentCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Document Number (Unique for each Biennial)",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Legislation Text Description",
+            "nullable": true
+          },
+          "Sponsor": {
+            "type": "string",
+            "description": "Body that authored/sponsored the Legislation Text (House/Senate/Conference/Governor)",
+            "nullable": true
+          },
+          "LDNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Legislation Document Number",
+            "nullable": true
+          },
+          "LegislationVersionID": {
+            "type": "integer",
+            "description": "Legislation Version ID",
+            "format": "int32"
+          },
+          "Version": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Version",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Public"
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Active"
+          },
+          "PdfFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/File"
+            },
+            "description": "PDF File(s)",
+            "nullable": true
+          },
+          "HtmlFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/File"
+            },
+            "description": "HTML File(s)",
+            "nullable": true
+          },
+          "LinkFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/File"
+            },
+            "description": "Link File(s)",
+            "nullable": true
+          },
+          "ImpactFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/File"
+            },
+            "description": "Impact Statement File(s)",
+            "nullable": true
+          },
+          "TextDispositionID": {
+            "type": "integer",
+            "description": "unique identifier for Text Disposition (e.g. 1=Offered, 2=Recommended, 3=Reported, etc)",
+            "format": "int32",
+            "nullable": true
+          },
+          "TextDisposition": {
+            "type": "string",
+            "description": "Text Disposition (e.g. Offered, Recommended, Reported, etc)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "legislation version response"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller used for ONLY reading (not writing) data (Contains GET Verbs)"
+    },
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    }
+  ]
+}

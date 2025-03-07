@@ -1,0 +1,452 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "PartnerAuthentication",
+    "description": "Handles Partner information including WebAPIKey validation\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/PartnerAuthentication/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/PartnerAuthentication/api/checkpartnerkeyasync/{apiKey}": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Checks a Partner API key",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "path",
+            "description": "Partner API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Partner"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/PartnerAuthentication/api/registerpartnerasync": {
+      "post": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Registers a Partner - step 1",
+        "parameters": [
+          {
+            "name": "emailAddress",
+            "in": "query",
+            "description": "Email Address of Contact",
+            "required": true,
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/PartnerAuthentication/api/completepartnerregistrationasync": {
+      "post": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Registers a Partner - step 2",
+        "requestBody": {
+          "description": "CreatePartnerRequest",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePartnerRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePartnerRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePartnerRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePartnerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/PartnerAuthentication/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/PartnerAuthentication/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreatePartnerRequest": {
+        "required": [
+          "ContactName",
+          "HashedWord",
+          "Phone"
+        ],
+        "type": "object",
+        "properties": {
+          "HashedWord": {
+            "type": "string",
+            "description": "API Registration URL hash - REQUIRED"
+          },
+          "ContactName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "contact name"
+          },
+          "OrganizationName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "organization name",
+            "nullable": true
+          },
+          "Url": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "URL",
+            "nullable": true
+          },
+          "Phone": {
+            "maxLength": 15,
+            "type": "string",
+            "description": "Contact Phone"
+          },
+          "EulaDate": {
+            "type": "string",
+            "description": "EULA Date",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Create partner request object containing user information"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Partner": {
+        "type": "object",
+        "properties": {
+          "PartnerID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "OrganizationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ContactName": {
+            "type": "string",
+            "nullable": true
+          },
+          "PhoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "EmailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "APIKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "URL": {
+            "type": "string",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "IsPublic": {
+            "type": "boolean"
+          },
+          "LastConnectDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EulaDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ModificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Success": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}

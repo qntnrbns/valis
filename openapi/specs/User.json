@@ -1,0 +1,1209 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LIS User Service (User)",
+    "description": "User Management Service for user objects within LIS\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/registerpublicuserasync": {
+      "post": {
+        "tags": [
+          "PublicUser"
+        ],
+        "summary": "Initial registration of a User",
+        "parameters": [
+          {
+            "name": "emailAddress",
+            "in": "query",
+            "description": "emailAddress",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/createpublicuserasync": {
+      "post": {
+        "tags": [
+          "PublicUser"
+        ],
+        "summary": "Registers a User",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "CreatePublicUserRequest",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePublicUserRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePublicUserRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePublicUserRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePublicUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/requestresetuserpasswordasync": {
+      "post": {
+        "tags": [
+          "PublicUser"
+        ],
+        "summary": "Requests a Password Reset via email",
+        "parameters": [
+          {
+            "name": "emailAddress",
+            "in": "query",
+            "description": "emailAddress",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/resetuserpasswordasync": {
+      "post": {
+        "tags": [
+          "PublicUser"
+        ],
+        "summary": "Resets a user password",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "userInformationRequest",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInformationRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInformationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInformationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInformationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          },
+          "202": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicUser"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicUser"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "UniqueID": {
+            "type": "string",
+            "description": "unique identifier",
+            "nullable": true
+          },
+          "Message": {
+            "type": "string",
+            "description": "general \"for display purposes\" message describing the result of the action taken",
+            "nullable": true
+          },
+          "SecondaryMessage": {
+            "type": "string",
+            "description": "Secondary Message for additional outjson2 parameter from the DB",
+            "nullable": true
+          },
+          "IsDataBaseError": {
+            "type": "boolean",
+            "description": "boolean to indicate if error is a database error or not",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing details of the result of an action taken. If no valid response \r\ncould be obtained, Success boolean will be false and additional information can be found \r\nin the FailureMessage string."
+      },
+      "ContactInformation": {
+        "type": "object",
+        "properties": {
+          "ContactInformationID": {
+            "type": "integer",
+            "description": "contact info unique  identifier (\"UniqueID\") - REQUIRED",
+            "format": "int32",
+            "nullable": true
+          },
+          "OwnerID": {
+            "maxLength": 25,
+            "type": "integer",
+            "description": "identity column that maps to the person object",
+            "format": "int32"
+          },
+          "ContactType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "choices include Home,Work,User,Main,Mailing--no interface element for this yet, needs discussion",
+            "nullable": true
+          },
+          "OwnerType": {
+            "type": "string",
+            "description": "choices include Person,User, Representative,,Member,Chamber,District no interface element for this \r\nyet, needs discussion",
+            "nullable": true
+          },
+          "Address1": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "address1",
+            "nullable": true
+          },
+          "Address2": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "address2 discussion need for multiple address for same person, etc",
+            "nullable": true
+          },
+          "Address3": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "address3",
+            "nullable": true
+          },
+          "City": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "city",
+            "nullable": true
+          },
+          "StateCode": {
+            "maxLength": 2,
+            "type": "string",
+            "description": "abbrev. state e.g., VA",
+            "nullable": true
+          },
+          "ZipCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "zip",
+            "nullable": true
+          },
+          "PhoneNumber": {
+            "maxLength": 15,
+            "type": "string",
+            "description": "phone (why not breakout for mobile?)",
+            "nullable": true
+          },
+          "EmailAddress": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "emailaddress...do we need to capture alternative email address?",
+            "format": "email",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "active"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "public"
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "Modification date --used for updates--must match existing date to pass concurrency rules for update",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DB object containing LIS userprofile, person, contact information to be provided to the DAL for the \r\npurposes of saving/creating."
+      },
+      "CreatePublicUserRequest": {
+        "required": [
+          "HashedWord",
+          "Password"
+        ],
+        "type": "object",
+        "properties": {
+          "HashedWord": {
+            "type": "string",
+            "description": "Registration hash"
+          },
+          "FirstName": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "User's first name",
+            "nullable": true
+          },
+          "LastName": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "User's last name",
+            "nullable": true
+          },
+          "Password": {
+            "maxLength": 50,
+            "minLength": 10,
+            "type": "string",
+            "description": "Password"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response for registering a new Public User"
+      },
+      "CreateUserDataModel": {
+        "required": [
+          "IdentityID",
+          "LoginID"
+        ],
+        "type": "object",
+        "properties": {
+          "LoginID": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Email Address",
+            "format": "email"
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity",
+            "format": "int32"
+          },
+          "OrganizationName": {
+            "type": "string",
+            "description": "User's Organization name",
+            "nullable": true
+          },
+          "DomainID": {
+            "type": "integer",
+            "description": "Unique identifier for Domain",
+            "format": "int32",
+            "nullable": true
+          },
+          "FirstName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "User's first name",
+            "nullable": true
+          },
+          "LastName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "User's last name",
+            "nullable": true
+          },
+          "Phone": {
+            "maxLength": 15,
+            "type": "string",
+            "description": "User's phone",
+            "nullable": true
+          },
+          "Address1": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "User's address 1",
+            "nullable": true
+          },
+          "City": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "User's city",
+            "nullable": true
+          },
+          "State": {
+            "maxLength": 2,
+            "type": "string",
+            "description": "User's state",
+            "nullable": true
+          },
+          "PostalCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "User's ZIP code",
+            "nullable": true
+          },
+          "ForceChangePassword": {
+            "type": "boolean",
+            "description": "Require the Password be changed on next login?"
+          },
+          "InitialPassword": {
+            "type": "string",
+            "description": "Initial password (if not provided, is auto-generated)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for creating a User"
+      },
+      "CreateUserResponse": {
+        "type": "object",
+        "properties": {
+          "UserProfileID": {
+            "type": "integer",
+            "description": "Unique identifier for User Profile",
+            "format": "int32"
+          },
+          "LoginID": {
+            "type": "string",
+            "description": "Login ID (email address)",
+            "nullable": true
+          },
+          "Password": {
+            "type": "string",
+            "description": "Password",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response for Creating a User"
+      },
+      "DirectoriesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryResponse"
+            },
+            "description": "List of Domains",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Domains"
+      },
+      "DirectoryResponse": {
+        "type": "object",
+        "properties": {
+          "DomainID": {
+            "type": "integer",
+            "description": "Unique identifier for Domain",
+            "format": "int32"
+          },
+          "DomainName": {
+            "type": "string",
+            "description": "Domain name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Domain"
+      },
+      "HeartBeatPrivateModel": {
+        "required": [
+          "ActionName",
+          "Controller",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "Controller": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "SaveUserDataModel": {
+        "required": [
+          "IdentityID",
+          "ModificationDate",
+          "UserProfileID"
+        ],
+        "type": "object",
+        "properties": {
+          "UserProfileID": {
+            "type": "integer",
+            "description": "Unique identifier for User Profile",
+            "format": "int32"
+          },
+          "ADUniqueID": {
+            "type": "string",
+            "description": "Globally unique identifier for user's Active Directory object",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity",
+            "format": "int32"
+          },
+          "DomainID": {
+            "type": "integer",
+            "description": "Unique identifier for Domain",
+            "format": "int32",
+            "nullable": true
+          },
+          "LoginID": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Email Address",
+            "format": "email",
+            "nullable": true
+          },
+          "OrganizationName": {
+            "type": "string",
+            "description": "User's Organization name",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is this active?"
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "Date of last modification",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Saving a User"
+      },
+      "UserInformationRequest": {
+        "type": "object",
+        "properties": {
+          "HashedWord": {
+            "type": "string",
+            "description": "hash of a random word",
+            "nullable": true
+          },
+          "EmailAddress": {
+            "type": "string",
+            "description": "email address submitted for registration",
+            "nullable": true
+          },
+          "ExpirationDate": {
+            "type": "string",
+            "description": "when this registration cache object should expire",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "User Information request containing random hash, submitted email address and expiration date"
+      },
+      "UserPerson": {
+        "type": "object",
+        "properties": {
+          "EmailAddress": {
+            "type": "string",
+            "description": "User's EmailAddress",
+            "nullable": true
+          },
+          "Name": {
+            "type": "string",
+            "description": "User's FullName",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class used for creating new userprofile, identity and person records"
+      },
+      "UserProfileResponse": {
+        "type": "object",
+        "properties": {
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity",
+            "format": "int32",
+            "nullable": true
+          },
+          "FullName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Full Name",
+            "nullable": true
+          },
+          "FirstName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "First Name",
+            "nullable": true
+          },
+          "MiddleName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Middle Name or Initial",
+            "nullable": true
+          },
+          "LastName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Last Name",
+            "nullable": true
+          },
+          "Prefix": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Prefix (e.g. Mr/Mrs/Sir)",
+            "nullable": true
+          },
+          "Suffix": {
+            "maxLength": 15,
+            "type": "string",
+            "description": "Suffix (e.g. Sr/Jr)",
+            "nullable": true
+          },
+          "AlternateName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Alternate Name",
+            "nullable": true
+          },
+          "CreationDate": {
+            "type": "string",
+            "description": "Creation Date",
+            "format": "date-time"
+          },
+          "UserProfileID": {
+            "type": "integer",
+            "description": "userprofileid--identity column on userprofile table, used to uniquely identify userprofile",
+            "format": "int32",
+            "nullable": true
+          },
+          "ADUniqueID": {
+            "maxLength": 40,
+            "type": "string",
+            "description": "active directory unique id",
+            "nullable": true
+          },
+          "LoginID": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "login id --typically first part of the active directory id",
+            "nullable": true
+          },
+          "OrganizationName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "organization like business or agency, eg., House, Senate, DLAS",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "active flag"
+          },
+          "ModificationDate": {
+            "type": "string",
+            "description": "Modification date --used for updates--must match existing date to pass concurrency rules for update",
+            "format": "date-time",
+            "nullable": true
+          },
+          "DomainID": {
+            "type": "integer",
+            "description": "Domain ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "DomainName": {
+            "type": "string",
+            "description": "Domain Name - not used when saving user information",
+            "nullable": true
+          },
+          "ContactInformation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactInformation"
+            },
+            "description": "list of contact objects",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserProfilesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserProfileResponse"
+            },
+            "description": "list of userprofiles",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "User Profiles Response"
+      },
+      "VaInteractiveActivityProfile": {
+        "required": [
+          "EmailAddress"
+        ],
+        "type": "object",
+        "properties": {
+          "EmailAddress": {
+            "type": "string"
+          },
+          "IsInactive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "VaInteractive Activity profile (setting active/inactive)"
+      },
+      "VaInteractiveActivityProfiles": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "VaInteractiveProfiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VaInteractiveActivityProfile"
+            },
+            "description": "list of VaInteractive Profiles",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of VaInteractiveActivityProfiles"
+      },
+      "VaInteractivePaymentProfile": {
+        "required": [
+          "EmailAddress"
+        ],
+        "type": "object",
+        "properties": {
+          "EmailAddress": {
+            "type": "string"
+          },
+          "IsPaid": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "VaInteractive payment profile (setting paid/unpaid)"
+      },
+      "VaInteractivePaymentProfiles": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "VaInteractiveProfiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VaInteractivePaymentProfile"
+            },
+            "description": "list of VaInteractivePayment Profiles",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of VaInteractiveProfilePayments"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "GraphBearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "GraphAuthorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "GraphBearer": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PartnerUser",
+      "description": "Partner actions controller for writing and reading data; will be authenticated using Roles and Authentication APIs."
+    },
+    {
+      "name": "PublicUser",
+      "description": "Public controller"
+    }
+  ]
+}

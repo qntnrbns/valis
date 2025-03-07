@@ -1,0 +1,5 @@
+packageName: valis
+projectName: valis
+packageUrl: https://github.com/qntnrbns/valis
+packageVersion: 1.0.0
+disallowAdditionalPropertiesIfNotPresent: false

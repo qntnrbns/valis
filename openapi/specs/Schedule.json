@@ -1,0 +1,792 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Schedule",
+    "description": "Handles all Meeting information\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getschedulelistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Meetings for non Docket and Calendar related items",
+        "parameters": [
+          {
+            "name": "scheduleIDs",
+            "in": "query",
+            "description": "List of unique identifiers for Meetings",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "ownerID",
+            "in": "query",
+            "description": "Unique identifier for Committee",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "scheduleTypeID",
+            "in": "query",
+            "description": "Unique identifier for Schedule Type",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "voteRoomID",
+            "in": "query",
+            "description": "Unique identifier for Vote Room",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "start date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicSchedulesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/previewvcalfileasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Generates vCal file for Meetings",
+        "parameters": [
+          {
+            "name": "scheduleIDs",
+            "in": "query",
+            "description": "List of unique identifiers for Meetings",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "ownerID",
+            "in": "query",
+            "description": "committee id for assignment",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "scheduleTypeID",
+            "in": "query",
+            "description": "Schedule Type ID",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "voteRoomID",
+            "in": "query",
+            "description": "Unique identifier for vote room",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "start date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "writeToAzureCDN",
+            "in": "query",
+            "description": "should write file to CDN?",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getmeetingroomsreferenceasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Meeting Rooms by Chamber Code",
+        "parameters": [
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingRoomsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getscheduletypesreferenceasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Schedule Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleTypesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeetingRoomResponse": {
+        "required": [
+          "ChamberCode",
+          "VoteRoomID"
+        ],
+        "type": "object",
+        "properties": {
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "unique identifier for VoteRoom",
+            "format": "int32"
+          },
+          "Description": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Meeting Room Description",
+            "nullable": true
+          },
+          "RoomNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Meeting Room #",
+            "nullable": true
+          },
+          "SeatCount": {
+            "type": "integer",
+            "description": "Count of Seats",
+            "format": "int32"
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code (H = House and S = Senate)"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Meeting Room Reference object"
+      },
+      "MeetingRoomsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeetingRoomResponse"
+            },
+            "description": "list of Meeting Rooms",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Meeting Rooms Reference List"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "PublicScheduleResponse": {
+        "type": "object",
+        "properties": {
+          "DisplaySequence": {
+            "type": "integer",
+            "description": "optional display sequence",
+            "format": "int32",
+            "nullable": true
+          },
+          "OwnerID": {
+            "type": "integer",
+            "description": "id for schedule owner",
+            "format": "int32",
+            "nullable": true
+          },
+          "OwnerName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "owner's name",
+            "nullable": true
+          },
+          "ScheduleTypeID": {
+            "type": "integer",
+            "description": "id for schedule type",
+            "format": "int32",
+            "nullable": true
+          },
+          "ScheduleType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Schedule Type Name",
+            "nullable": true
+          },
+          "VoteRoomID": {
+            "type": "integer",
+            "description": "id for vote room",
+            "format": "int32",
+            "nullable": true
+          },
+          "RoomDescription": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Room Description",
+            "nullable": true
+          },
+          "ScheduleDate": {
+            "type": "string",
+            "description": "schedule Date",
+            "format": "date"
+          },
+          "ScheduleTime": {
+            "type": "string",
+            "description": "schedule Time",
+            "format": "time",
+            "nullable": true
+          },
+          "Comments": {
+            "maxLength": 1000,
+            "type": "string",
+            "description": "Comments",
+            "nullable": true
+          },
+          "IsCancelled": {
+            "type": "boolean",
+            "description": "is this canceled"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "is this publicly viewable"
+          },
+          "LinkURL": {
+            "type": "string",
+            "description": "LinkURL",
+            "nullable": true
+          },
+          "ScheduleID": {
+            "type": "integer",
+            "description": "id for schedule",
+            "format": "int32"
+          },
+          "VersionSequence": {
+            "type": "integer",
+            "description": "Version Sequence number - used for iCalendar (ICS) file versioning; automatically incremented by database when updates are made",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public Schedule"
+      },
+      "PublicSchedulesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicScheduleResponse"
+            },
+            "description": "list of schedules",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS public schedules (using PublicScheduleResponse). \r\nIf no valid response could be obtained, Success boolean will be false and additional information can \r\nbe found in the FailureMessage string."
+      },
+      "ScheduleTypeResponse": {
+        "type": "object",
+        "properties": {
+          "ScheduleTypeID": {
+            "type": "integer",
+            "description": "id for schedule type",
+            "format": "int32",
+            "nullable": true
+          },
+          "ScheduleType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Schedule Type Name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Schedule type reference list"
+      },
+      "ScheduleTypesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleTypeResponse"
+            },
+            "description": "list of schedules",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Schedule types"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}

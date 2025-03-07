@@ -1,0 +1,972 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LegislationPatron",
+    "description": "Handles all Patron information from Senate, House and eFile/BDS; also shows Patrons on legislation\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/LegislationPatron/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationPatron/api/getlegislationpatronsbyidasync/{legislationID}": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Patrons using legislation unique identifier",
+        "parameters": [
+          {
+            "name": "legislationID",
+            "in": "path",
+            "description": "Unique identifier for the Legislation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegislationPatronsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationPatron/api/getlegislationpatronlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Legislation Patrons",
+        "parameters": [
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber Code (e.g. H/S)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "memberID",
+            "in": "query",
+            "description": "Unique identifier for Member",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "patronType",
+            "in": "query",
+            "description": "Patron Type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Session start date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "sequence",
+            "in": "query",
+            "description": "Sequence",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatronsLegislationListResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationPatron/api/getmemberpatrontypelistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a List of Member Patron Types",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "memberID",
+            "in": "query",
+            "description": "Unique identifier for Member",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberPatronTypesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationPatron/api/getpatronroletypelistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Patron Role Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatronRolesReference"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationPatron/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/LegislationPatron/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Legislation": {
+        "type": "object",
+        "properties": {
+          "SessionID": {
+            "type": "integer",
+            "description": "Unique identifier for Session",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "LegislationClassID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislation Class",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Legislation Description/Catchline",
+            "nullable": true
+          },
+          "LegislationTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "OfferedDate": {
+            "type": "string",
+            "description": "Legislation Offered date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "IntroductionDate": {
+            "type": "string",
+            "description": "Legislation Introduction date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "LegislationTypeCode": {
+            "type": "string",
+            "description": "Legislation Type Code description",
+            "nullable": true
+          },
+          "FullNumber": {
+            "type": "string",
+            "description": "Full Number of the bill",
+            "nullable": true
+          },
+          "LegislationStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Legislative Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationClass": {
+            "type": "string",
+            "description": "Legislation LegislationClass (identified by ID above)",
+            "nullable": true
+          },
+          "LegislationID": {
+            "type": "integer",
+            "description": "Legislation ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationKey": {
+            "type": "integer",
+            "description": "Legislation Key",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationStatus": {
+            "type": "string",
+            "description": "Legislation Status",
+            "nullable": true
+          },
+          "EffectiveType": {
+            "type": "string",
+            "description": "Effective Type",
+            "nullable": true
+          },
+          "SessionName": {
+            "type": "string",
+            "description": "Session Name",
+            "nullable": true
+          },
+          "IsPrefile": {
+            "type": "boolean",
+            "description": "IsPrefile"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legislation Patron Response that uses the Legislation Base Model in the DAL"
+      },
+      "LegislationPatronsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Patron"
+            },
+            "description": "list of members",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS legislation patrons (using Patron). \r\nIf no valid response could be obtained, Success boolean will be false and additional information \r\ncan be found in the FailureMessage string."
+      },
+      "MemberPatronTypeResponse": {
+        "type": "object",
+        "properties": {
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "patron type id",
+            "format": "int32"
+          },
+          "Name": {
+            "type": "string",
+            "description": "name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "type": "string",
+            "description": "display name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Member Patron Type for a unique MemberID and Session"
+      },
+      "MemberPatronTypesResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberPatronTypeResponse"
+            },
+            "description": "list of member patron types",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Member Patron Types"
+      },
+      "Patron": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Patron Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Display Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Patron Sequence # (e.g. 1001 ==> Chief Patron)",
+            "format": "int32"
+          },
+          "IsIntroducing": {
+            "type": "boolean",
+            "description": "Is this patron introducing the bill?",
+            "nullable": true
+          },
+          "ByRequest": {
+            "type": "boolean",
+            "description": "Is this by request of an entity?",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Legislation Patron"
+      },
+      "PatronLegislationListResponse": {
+        "type": "object",
+        "properties": {
+          "LegislationID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation",
+            "format": "int32",
+            "nullable": true
+          },
+          "LegislationTextID": {
+            "type": "integer",
+            "description": "Database Unique Identifier for Legislation Text",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "MemberID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "type": "string",
+            "description": "Member Number",
+            "nullable": true
+          },
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Databse Unique Identifier for Patron Type ID",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Role Display Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "LegislationNumber": {
+            "type": "string",
+            "description": "Legislation number",
+            "nullable": true
+          },
+          "Sequence": {
+            "type": "integer",
+            "description": "Patron Sequence # (e.g. 1001 ==> Chief Patron)",
+            "format": "int32"
+          },
+          "IsIntroducing": {
+            "type": "boolean",
+            "description": "Is this patron introducing the bill?",
+            "nullable": true
+          },
+          "ByRequest": {
+            "type": "boolean",
+            "description": "Is this by request of an entity?",
+            "nullable": true
+          },
+          "Legislation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Legislation"
+            },
+            "description": "legislation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "patron legislation list"
+      },
+      "PatronRoleReference": {
+        "type": "object",
+        "properties": {
+          "PatronTypeID": {
+            "type": "integer",
+            "description": "Unique ID for patron Type ID",
+            "format": "int32"
+          },
+          "Name": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron name",
+            "nullable": true
+          },
+          "DisplayName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Patron public display name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object for Role lookup of different committee types"
+      },
+      "PatronRolesReference": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PatronRoleReference"
+            },
+            "description": "list of committee roles",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Patron Roles Reference"
+      },
+      "PatronsLegislationListResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PatronLegislationListResponse"
+            },
+            "description": "list of patron legislation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "patron legislation list"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller used for reading data"
+    }
+  ]
+}

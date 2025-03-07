@@ -1,0 +1,606 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Statistics",
+    "description": "Handles Statistics information for Committees, Chambers, etc\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getcommitteestatisticsasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets Committee Statistics by session and chamber",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommitteeStatisticsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getchamberstatisticsasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets Chamber Statistics by session",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChamberStatisticsResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChamberStatisticResponse": {
+        "type": "object",
+        "properties": {
+          "ChamberCode": {
+            "type": "string",
+            "description": "Chamber Code",
+            "nullable": true
+          },
+          "LegislationTypeCode": {
+            "type": "string",
+            "description": "Legislation Type Code (B/J/R)",
+            "nullable": true
+          },
+          "Introduced": {
+            "type": "integer",
+            "description": "number of legislation introduced",
+            "format": "int32"
+          },
+          "PassedHouse": {
+            "type": "integer",
+            "description": "number of legislation passed in the House of Delegates",
+            "format": "int32"
+          },
+          "PassedSenate": {
+            "type": "integer",
+            "description": "number of legislation passed in the Senate",
+            "format": "int32"
+          },
+          "Passed": {
+            "type": "integer",
+            "description": "number of legislation passed",
+            "format": "int32"
+          },
+          "Pending": {
+            "type": "integer",
+            "description": "number of legislation pending",
+            "format": "int32"
+          },
+          "Incorporated": {
+            "type": "integer",
+            "description": "number of legislation incorporated",
+            "format": "int32"
+          },
+          "Failed": {
+            "type": "integer",
+            "description": "number of legislation failed",
+            "format": "int32"
+          },
+          "Approved": {
+            "type": "integer",
+            "description": "number of legislation approved",
+            "format": "int32"
+          },
+          "Veto": {
+            "type": "integer",
+            "description": "number of legislation vetoed",
+            "format": "int32"
+          },
+          "AwaitingGovAction": {
+            "type": "integer",
+            "description": "number of legislation awaiting Governor's action",
+            "format": "int32"
+          },
+          "ContinuedFromLastSession": {
+            "type": "integer",
+            "description": "number of legislation that was continued from last session",
+            "format": "int32"
+          },
+          "ContinuedToNextSession": {
+            "type": "integer",
+            "description": "number of legislation that is continued to next session",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing chamber statistics information. If no valid response \r\ncould be obtained, Success boolean will be false and additional information can be found \r\nin the FailureMessage string."
+      },
+      "ChamberStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChamberStatisticResponse"
+            },
+            "description": "committee statistics list",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of chamber statistics (using ChamberStatisticResponse). If no valid response could be \r\nobtained, Success boolean will be false and additional information can be found in FailureMessage."
+      },
+      "CommitteeStatisticResponse": {
+        "type": "object",
+        "properties": {
+          "CommitteeID": {
+            "type": "integer",
+            "description": "unique identifier for Committee",
+            "format": "int32"
+          },
+          "CommitteeNumber": {
+            "type": "string",
+            "description": "unique number for Committee",
+            "nullable": true
+          },
+          "CommitteeName": {
+            "type": "string",
+            "description": "name for Committee",
+            "nullable": true
+          },
+          "HReferred": {
+            "type": "integer",
+            "description": "number of legislation referred to the committee from the House",
+            "format": "int32"
+          },
+          "SReferred": {
+            "type": "integer",
+            "description": "number of legislation referred to the committee from the Senate",
+            "format": "int32"
+          },
+          "HInCommittee": {
+            "type": "integer",
+            "description": "number of legislation currently in committee from the House",
+            "format": "int32"
+          },
+          "SInCommittee": {
+            "type": "integer",
+            "description": "number of legislation currently in committee from the Senate",
+            "format": "int32"
+          },
+          "HInSubCommittee": {
+            "type": "integer",
+            "description": "number of legislation currently in subcommittee from the House",
+            "format": "int32"
+          },
+          "SInSubCommittee": {
+            "type": "integer",
+            "description": "number of legislation currently in subcommittee from the Senate",
+            "format": "int32"
+          },
+          "HReported": {
+            "type": "integer",
+            "description": "number of legislation reported out from committee from the House",
+            "format": "int32"
+          },
+          "SReported": {
+            "type": "integer",
+            "description": "number of legislation reported out from committee from the Senate",
+            "format": "int32"
+          },
+          "HIncorporated": {
+            "type": "integer",
+            "description": "number of legislation incorporated from committee from the House",
+            "format": "int32"
+          },
+          "SIncorporated": {
+            "type": "integer",
+            "description": "number of legislation incorporated from committee from the Senate",
+            "format": "int32"
+          },
+          "HContinued": {
+            "type": "integer",
+            "description": "number of legislation continued from the House",
+            "format": "int32"
+          },
+          "SContinued": {
+            "type": "integer",
+            "description": "number of legislation continued from the Senate",
+            "format": "int32"
+          },
+          "HContinuedFrom": {
+            "type": "integer",
+            "description": "number of legislation continued from committee from the House",
+            "format": "int32"
+          },
+          "SContinuedFrom": {
+            "type": "integer",
+            "description": "number of legislation continued from committee from the Senate",
+            "format": "int32"
+          },
+          "HFailed": {
+            "type": "integer",
+            "description": "number of legislation failed from committee from the House",
+            "format": "int32"
+          },
+          "SFailed": {
+            "type": "integer",
+            "description": "number of legislation failed from committee from the Senate",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing committee statistics information. If no valid response \r\ncould be obtained, Success boolean will be false and additional information can be found \r\nin the FailureMessage string."
+      },
+      "CommitteeStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommitteeStatisticResponse"
+            },
+            "description": "committee statistics list",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "list of committee statistics (using CommitteeStatisticResponse). If no valid response could be \r\nobtained, Success boolean will be false and additional information can be found in FailureMessage."
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}

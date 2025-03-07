@@ -1,0 +1,731 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LIS Authentication Service (Authentication)",
+    "description": "User Authentication Service for accessing LIS\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Authentication/api/loginasync": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Makes a request to login",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "LoginRequest",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Authentication/api/getaccesstokenasync": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Access Token",
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "expiresin",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Authentication/api/changepasswordasync": {
+      "put": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Changes your password",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "username (email address format)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "existing password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newpassword",
+            "in": "query",
+            "description": "new password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Authentication/api/refreshaccesstokenasync": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refreshes the access token",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Authentication/api/authenticationheartbeatasync": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Authentication/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "UniqueID": {
+            "type": "string",
+            "description": "unique identifier",
+            "nullable": true
+          },
+          "Message": {
+            "type": "string",
+            "description": "general \"for display purposes\" message describing the result of the action taken",
+            "nullable": true
+          },
+          "SecondaryMessage": {
+            "type": "string",
+            "description": "Secondary Message for additional outjson2 parameter from the DB",
+            "nullable": true
+          },
+          "IsDataBaseError": {
+            "type": "boolean",
+            "description": "boolean to indicate if error is a database error or not",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing details of the result of an action taken. If no valid response \r\ncould be obtained, Success boolean will be false and additional information can be found \r\nin the FailureMessage string."
+      },
+      "AuthenticationResponse": {
+        "type": "object",
+        "properties": {
+          "EmailAddress": {
+            "type": "string",
+            "description": "Email Address (\"UserPrincipalName\")",
+            "nullable": true
+          },
+          "LastName": {
+            "type": "string",
+            "description": "First Name (\"GivenName\")",
+            "nullable": true
+          },
+          "FirstName": {
+            "type": "string",
+            "description": "Last Name (\"Surname\")",
+            "nullable": true
+          },
+          "UniqueID": {
+            "type": "string",
+            "description": "Active Directory unique identifier (\"Id\")",
+            "nullable": true
+          },
+          "Groups": {
+            "type": "string",
+            "description": "list of groups the user is part of",
+            "nullable": true
+          },
+          "AccessToken": {
+            "type": "string",
+            "description": "JWT access token created by LIS to contain the the user group claims",
+            "nullable": true
+          },
+          "GraphToken": {
+            "type": "string",
+            "description": "JWT access token issued by Graph API when successfully logged in",
+            "nullable": true
+          },
+          "RefreshToken": {
+            "type": "string",
+            "description": "JWT refresh token which can be used to obtain new access tokens",
+            "nullable": true
+          },
+          "AccessTokenLifetime": {
+            "type": "integer",
+            "description": "Access Token Lifetime in seconds - returned when successfully logged in",
+            "format": "int32"
+          },
+          "Claims": {
+            "$ref": "#/components/schemas/GroupRolesResponse"
+          },
+          "Success": {
+            "type": "boolean",
+            "description": "is this response valid? (true=success, false=unsuccessful)"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "message describing why this response was not successful",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "Cache Key Name for GetResponses",
+            "nullable": true
+          },
+          "IsPasswordTemporaryOrExpired": {
+            "type": "boolean",
+            "description": "Boolean flags password if it's temporary or expired",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupRolesResponse": {
+        "type": "object",
+        "properties": {
+          "Roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleResponse"
+            },
+            "nullable": true
+          },
+          "Success": {
+            "type": "boolean",
+            "description": "is this response valid? (true=success, false=unsuccessful)"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "message describing why the action taken was not successful",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "required": [
+          "Password",
+          "UserID"
+        ],
+        "type": "object",
+        "properties": {
+          "UserID": {
+            "type": "string",
+            "description": "Username in email format"
+          },
+          "Password": {
+            "type": "string",
+            "description": "Password"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information used for requesting access"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "RoleResponse": {
+        "required": [
+          "Action",
+          "Resource",
+          "RoleName",
+          "Scope"
+        ],
+        "type": "object",
+        "properties": {
+          "RoleID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "RoleName": {
+            "maxLength": 180,
+            "type": "string"
+          },
+          "Scope": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "Resource": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "Component": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "Action": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "ModificationDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    }
+  ]
+}

@@ -1,0 +1,942 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Session",
+    "description": "Handles all Session information\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getsessionlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Sessions",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionsPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getsessionsbyyearasync/{year}": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Sessions for a specific year",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "description": "Year",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionsPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getsessionbyidasync/{sessionId}": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Get a list of Session by unique identifier",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Unique identifier for Session",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionsPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getsessionbycodeasync/{sessionCode}": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Sessions by session code",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "path",
+            "description": "Session code (e.g. 20181)",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionsPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getdefaultsessionasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Sessions marked as default",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionsPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getsessionshallowlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a shallow list of Sessions",
+        "parameters": [
+          {
+            "name": "sessionTypeID",
+            "in": "query",
+            "description": "Unique identifier for Session T",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionYear",
+            "in": "query",
+            "description": "Session year",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IsActive",
+            "in": "query",
+            "description": "Is it active?",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionsShallowPublicGetResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getsessioneventtypereferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Session Event Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionEventTypesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/getsessiontypereferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Session Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionTypesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "SessionEventPublicGetResponse": {
+        "required": [
+          "EventTypeID",
+          "SessionEventID"
+        ],
+        "type": "object",
+        "properties": {
+          "DisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Session event display name",
+            "nullable": true
+          },
+          "ActualDate": {
+            "type": "string",
+            "description": "Actual date for the session event",
+            "format": "date-time",
+            "nullable": true
+          },
+          "InternalOnly": {
+            "type": "boolean",
+            "description": "Is this used internally only?"
+          },
+          "EventTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Event Type",
+            "format": "int32"
+          },
+          "ProjectedDate": {
+            "type": "string",
+            "description": "Projected date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "SessionEventID": {
+            "type": "integer",
+            "description": "Session Event unique identifier",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Session Event public Get Response"
+      },
+      "SessionEventTypeReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Description/Name of the ID",
+            "nullable": true
+          },
+          "ID": {
+            "type": "integer",
+            "description": "Session Event Type unique identifier",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing LIS Session events reference information. If no valid response \r\ncould be obtained, Success boolean will be false and additional information can be found \r\nin the FailureMessage string."
+      },
+      "SessionEventTypesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionEventTypeReferenceResponse"
+            },
+            "description": "list of Session Events",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS Sessions with Events (using SessionResponse). If no valid response could be obtained, Success boolean will be false and additional information can be found in the FailureMessage string."
+      },
+      "SessionPublicGetResponse": {
+        "required": [
+          "SessionCode",
+          "SessionID",
+          "SessionTypeID",
+          "SessionYear"
+        ],
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Session code (e.g. 20181)"
+          },
+          "DisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Session descriptive name",
+            "nullable": true
+          },
+          "SessionYear": {
+            "type": "integer",
+            "description": "Session Year",
+            "format": "int32"
+          },
+          "SessionType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Session Type description",
+            "nullable": true
+          },
+          "StartDate": {
+            "type": "string",
+            "description": "Effective date for start of session",
+            "format": "date-time",
+            "nullable": true
+          },
+          "IsDefault": {
+            "type": "boolean",
+            "description": "Is it default?"
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is it active?"
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session unique identifier",
+            "format": "int32"
+          },
+          "SessionTypeID": {
+            "type": "integer",
+            "description": "Session type id ie, 1= regular vs. 2=special",
+            "format": "int32"
+          },
+          "SessionEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionEventPublicGetResponse"
+            },
+            "description": "Listing of Session Events",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Session Response for Public Display"
+      },
+      "SessionShallowPublicGetResponse": {
+        "required": [
+          "SessionCode",
+          "SessionID",
+          "SessionYear"
+        ],
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Session code (e.g. 20181)"
+          },
+          "DisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Session descriptive name",
+            "nullable": true
+          },
+          "SessionYear": {
+            "type": "integer",
+            "description": "Session Year",
+            "format": "int32"
+          },
+          "SessionType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Session Type description",
+            "nullable": true
+          },
+          "StartDate": {
+            "type": "string",
+            "description": "Effective date for start of session",
+            "format": "date-time",
+            "nullable": true
+          },
+          "IsDefault": {
+            "type": "boolean",
+            "description": "Is it default?"
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is it active?"
+          },
+          "SessionID": {
+            "type": "integer",
+            "description": "Session unique identifier",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Shallow Session Response (not including Session Events)"
+      },
+      "SessionsPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionPublicGetResponse"
+            },
+            "description": "list of sessions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Sessions Public Get Response"
+      },
+      "SessionsShallowPublicGetResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionShallowPublicGetResponse"
+            },
+            "description": "list of sessions",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Shallow Sessions response (without Session Events)"
+      },
+      "SessionTypeReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Description/Name of the ID",
+            "nullable": true
+          },
+          "ID": {
+            "type": "integer",
+            "description": "Session Event Type unique identifier",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response object containing LIS Session events reference information. If no valid response \r\ncould be obtained, Success boolean will be false and additional information can be found \r\nin the FailureMessage string."
+      },
+      "SessionTypesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionTypeReferenceResponse"
+            },
+            "description": "list of Session Types",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request and Response object containing a list of LIS Sessions with Events (using SessionResponse). If no valid response could be obtained, Success boolean will be false and additional information can be found in the FailureMessage string."
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    },
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    }
+  ]
+}

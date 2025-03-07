@@ -1,0 +1,33 @@
+# LegislationAmendmentsResponse
+
+Legislation with Amendments Model
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**success** | **bool** | Is this a successful response? | [optional] 
+**failure_message** | **str** | Details if this response failed | [optional] 
+**cache_key_name** | **str** | CacheKey name | [optional] 
+**list_items** | [**List[LegislationAmendmentResponse]**](LegislationAmendmentResponse.md) | list of legislation amendments | [optional] 
+
+## Example
+
+```python
+from valis.models.legislation_amendments_response import LegislationAmendmentsResponse
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of LegislationAmendmentsResponse from a JSON string
+legislation_amendments_response_instance = LegislationAmendmentsResponse.from_json(json)
+# print the JSON string representation of the object
+print(LegislationAmendmentsResponse.to_json())
+
+# convert the object into a dict
+legislation_amendments_response_dict = legislation_amendments_response_instance.to_dict()
+# create an instance of LegislationAmendmentsResponse from a dict
+legislation_amendments_response_from_dict = LegislationAmendmentsResponse.from_dict(legislation_amendments_response_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

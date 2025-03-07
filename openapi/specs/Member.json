@@ -1,0 +1,1881 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Member",
+    "description": "Handling all Member information\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->",
+    "contact": {
+      "name": "LIS API Help Desk",
+      "url": "https://help.lis.virginia.gov/",
+      "email": "lis@dlas.virginia.gov"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Member/api/heartbeat/heartbeatasync": {
+      "get": {
+        "tags": [
+          "HeartBeat"
+        ],
+        "summary": "Checks service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getpartyreferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Political Parties",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PartiesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getmemberstatustypereferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Member Status Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberStatusTypesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getchambertypereferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Chambers",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChamberTypesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getdistrictreferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Districts",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictsReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getownertypereferencesasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Owner Types",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnerTypesReferenceResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getmemberscontactinformationlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Member Contact Information",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "effectiveDate",
+            "in": "query",
+            "description": "Effective date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contactTypeID",
+            "in": "query",
+            "description": "Unique identifier for Contact Type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberNumber",
+            "in": "query",
+            "description": "Member number (e.g. H289)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "partyCode",
+            "in": "query",
+            "description": "Political party (R/D/I)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembersContactInformationSearchResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getcommitteeslistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Committees by Member",
+        "parameters": [
+          {
+            "name": "effectiveDate",
+            "in": "query",
+            "description": "Effective date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "MemberID",
+            "in": "query",
+            "description": "Unique identifier for Member",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommitteesByMemberSearchResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getmemberlistasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a shallow list of Members",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statuses",
+            "in": "query",
+            "description": "Comma-separated list of member statuses",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberNumber",
+            "in": "query",
+            "description": "Member number (e.g. H289)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "partyCode",
+            "in": "query",
+            "description": "Political party (R/D/I)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShallowMembersResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getmembersasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of Members",
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "chamberCode",
+            "in": "query",
+            "description": "Chamber code (H/S)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statuses",
+            "in": "query",
+            "description": "Comma-separated list of member statuses",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberNumber",
+            "in": "query",
+            "description": "Member number (e.g. H289)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "partyCode",
+            "in": "query",
+            "description": "Political party (R/D/I)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicMembersResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getactivemembersasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a list of active Members",
+        "parameters": [
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicMembersResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/getmemberbyidasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets a Member by unique identifier",
+        "parameters": [
+          {
+            "name": "memberID",
+            "in": "query",
+            "description": "Unique identifier for Member",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionID",
+            "in": "query",
+            "description": "Unique identifier for Session",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionCode",
+            "in": "query",
+            "description": "Session code (e.g. 20181)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicMembersResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/clearpubliccache": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Clear all cache for this controller",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Member/api/heartbeatasync": {
+      "get": {
+        "tags": [
+          "PublicActions"
+        ],
+        "summary": "Gets telemetry on service health",
+        "parameters": [
+          {
+            "name": "WebAPIKey",
+            "in": "header",
+            "description": "Partner WebAPIKey",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartBeatPublicModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChamberTypeReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "ChamberCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Chamber name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Chamber"
+      },
+      "ChamberTypesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChamberTypeReferenceResponse"
+            },
+            "description": "List of Chambers",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Chambers"
+      },
+      "CommitteeByMemberResponse": {
+        "type": "object",
+        "properties": {
+          "ParentCommitteeID": {
+            "type": "integer",
+            "description": "Unique identifier for parent Committee",
+            "format": "int32",
+            "nullable": true
+          },
+          "CommitteeID": {
+            "type": "integer",
+            "description": "Unique identifier for this Committee",
+            "format": "int32"
+          },
+          "Name": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Committee name",
+            "nullable": true
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "CommitteeNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Committee number (e.g. S10)",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Committee associated to a member"
+      },
+      "CommitteesByMemberSearchResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommitteeByMemberResponse"
+            },
+            "description": "List of committees associated to a member",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of committees associated to a member"
+      },
+      "ContactResponse": {
+        "type": "object",
+        "properties": {
+          "ContactInformationID": {
+            "type": "integer",
+            "description": "Unique identifier for this Contact",
+            "format": "int32",
+            "nullable": true
+          },
+          "OwnerID": {
+            "type": "integer",
+            "description": "Unique identifier for Owner",
+            "format": "int32"
+          },
+          "ContactTypeID": {
+            "type": "integer",
+            "description": "Unique identifier for Contact Type",
+            "format": "int32"
+          },
+          "ContactType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Contact Type",
+            "nullable": true
+          },
+          "Address1": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Address 1",
+            "nullable": true
+          },
+          "Address2": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Address 2",
+            "nullable": true
+          },
+          "Address3": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Address 3",
+            "nullable": true
+          },
+          "City": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "City",
+            "nullable": true
+          },
+          "StateCode": {
+            "maxLength": 2,
+            "type": "string",
+            "description": "State",
+            "nullable": true
+          },
+          "ZipCode": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Postal/Zip Code",
+            "nullable": true
+          },
+          "PhoneNumber": {
+            "maxLength": 15,
+            "type": "string",
+            "description": "Phone Number",
+            "nullable": true
+          },
+          "EmailAddress": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Email Address",
+            "format": "email",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "description": "Is this Contact active?"
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this Contact public?"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Contact"
+      },
+      "DistrictReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "DistrictID": {
+            "type": "integer",
+            "description": "Unique identifier for this District",
+            "format": "int32"
+          },
+          "Title": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "District title",
+            "nullable": true
+          },
+          "Description": {
+            "maxLength": 2000,
+            "type": "string",
+            "description": "District description",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a District"
+      },
+      "DistrictsReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DistrictReferenceResponse"
+            },
+            "description": "List of Districts",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Districts"
+      },
+      "HeartBeatPublicModel": {
+        "required": [
+          "ActionName",
+          "DateTime",
+          "Environment",
+          "Service",
+          "User"
+        ],
+        "type": "object",
+        "properties": {
+          "User": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "DateTime": {
+            "type": "string"
+          },
+          "Environment": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "ActionName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Service": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "Success": {
+            "type": "boolean"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberContactInformationSearchResponse": {
+        "type": "object",
+        "properties": {
+          "MemberID": {
+            "type": "integer",
+            "description": "Unique identifier for this Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity",
+            "format": "int32"
+          },
+          "MemberNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Member number (e.g. H289)",
+            "nullable": true
+          },
+          "FullName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member Full Name",
+            "nullable": true
+          },
+          "FirstName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member First Name",
+            "nullable": true
+          },
+          "MiddleName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Middle Name",
+            "nullable": true
+          },
+          "LastName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Last Name",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member Display Name",
+            "nullable": true
+          },
+          "RoomNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Member Room number",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this Member public ?"
+          },
+          "GABPhoneNumber": {
+            "type": "string",
+            "description": "General Assembly Phone #",
+            "nullable": true
+          },
+          "GABEmailAddress": {
+            "type": "string",
+            "description": "General Assembly Email Address",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "Chamber": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Chamber name",
+            "nullable": true
+          },
+          "PartyCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Political party (R/D/I)",
+            "nullable": true
+          },
+          "PartyName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Political party name",
+            "nullable": true
+          },
+          "DistrictID": {
+            "type": "integer",
+            "description": "Unique identifier for District",
+            "format": "int32"
+          },
+          "DistrictName": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "District name (e.g. 17th)",
+            "nullable": true
+          },
+          "MemberStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Member Status",
+            "format": "int32"
+          },
+          "MemberStatus": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Status name",
+            "nullable": true
+          },
+          "ServiceBeginDate": {
+            "type": "string",
+            "description": "Begin date of Service",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ServiceEndDate": {
+            "type": "string",
+            "description": "End date of Service (removal date)",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ServiceEndReason": {
+            "type": "string",
+            "description": "Member Service End Reason",
+            "nullable": true
+          },
+          "ContactInformation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactResponse"
+            },
+            "description": "List of Contact Information",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Member Contact"
+      },
+      "MembersContactInformationSearchResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberContactInformationSearchResponse"
+            },
+            "description": "List of Member Contact Information",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Member Contact Information"
+      },
+      "MemberStatusTypeReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "MemberStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Member Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Status name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for a Member Status Type"
+      },
+      "MemberStatusTypesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberStatusTypeReferenceResponse"
+            },
+            "description": "list of Member Status Types",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Member Status Types"
+      },
+      "OwnerTypeReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "OwnerTypeID": {
+            "type": "string",
+            "description": "Unique identifier for Owner Type",
+            "nullable": true
+          },
+          "OwnerType": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Owner Type",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for an Owner Type"
+      },
+      "OwnerTypesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OwnerTypeReferenceResponse"
+            },
+            "description": "list of Owner Types",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Owner Types"
+      },
+      "PartiesReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartyReferenceResponse"
+            },
+            "description": "list of Politcal Parties",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Political Parties"
+      },
+      "PartyReferenceResponse": {
+        "type": "object",
+        "properties": {
+          "PartyCode": {
+            "maxLength": 1,
+            "type": "string",
+            "description": "Unique identifer for Political Party",
+            "nullable": true
+          },
+          "Name": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Political Party name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information for Political Party"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "PublicMemberResponse": {
+        "type": "object",
+        "properties": {
+          "MemberID": {
+            "type": "integer",
+            "description": "Unique identifier for this Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberDetailID": {
+            "type": "integer",
+            "description": "Unique identifier for Member Detail",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Member number (e.g. H289)",
+            "nullable": true
+          },
+          "ListDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member's Name to be displayed for List purposes",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member's Name to be displayed",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Patron Display Name",
+            "nullable": true
+          },
+          "Salutation": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Salutation",
+            "nullable": true
+          },
+          "ServiceBeginDate": {
+            "type": "string",
+            "description": "Begin date of Service for this Member",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ServiceEndDate": {
+            "type": "string",
+            "description": "End date of Service for this Member",
+            "format": "date-time",
+            "nullable": true
+          },
+          "LastElectionDate": {
+            "type": "string",
+            "description": "Last election date for this Member",
+            "format": "date-time",
+            "nullable": true
+          },
+          "RoomNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Member Room number",
+            "nullable": true
+          },
+          "ServiceEndReason": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Service End Reason",
+            "nullable": true
+          },
+          "GABPhoneNumber": {
+            "type": "string",
+            "description": "General Assembly Phone #",
+            "nullable": true
+          },
+          "GABEmailAddress": {
+            "type": "string",
+            "description": "General Assembly Email Address",
+            "nullable": true
+          },
+          "SeatNumber": {
+            "type": "integer",
+            "description": "Member chamber floor seat number",
+            "format": "int32",
+            "nullable": true
+          },
+          "Seniority": {
+            "type": "integer",
+            "description": "Member seniority ranking",
+            "format": "int32",
+            "nullable": true
+          },
+          "VotingSequence": {
+            "type": "integer",
+            "description": "Member voting order",
+            "format": "int32",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "ChamberName": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Chamber Name",
+            "nullable": true
+          },
+          "DistrictID": {
+            "type": "integer",
+            "description": "Unique identifier for District",
+            "format": "int32",
+            "nullable": true
+          },
+          "DistrictName": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "District name",
+            "nullable": true
+          },
+          "PartyCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Political party (R/D/I)",
+            "nullable": true
+          },
+          "MemberStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Member Status",
+            "format": "int32",
+            "nullable": true
+          },
+          "MemberStatus": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Status name",
+            "nullable": true
+          },
+          "StatusReason": {
+            "type": "string",
+            "description": "Member status reason",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this Member public ?"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public information for a Member"
+      },
+      "PublicMembersResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicMemberResponse"
+            },
+            "description": "list of Public Members",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of Public Members"
+      },
+      "ShallowMemberResponse": {
+        "type": "object",
+        "properties": {
+          "MemberID": {
+            "type": "integer",
+            "description": "Unique identifier for this Member",
+            "format": "int32",
+            "nullable": true
+          },
+          "IdentityID": {
+            "type": "integer",
+            "description": "Unique identifier for Identity",
+            "format": "int32",
+            "nullable": true
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session code (e.g. 20181)",
+            "nullable": true
+          },
+          "MemberNumber": {
+            "maxLength": 10,
+            "type": "string",
+            "description": "Member's assigned Number",
+            "nullable": true
+          },
+          "ListDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member's Name to be displayed for List purposes",
+            "nullable": true
+          },
+          "MemberDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member's Name to be displayed",
+            "nullable": true
+          },
+          "PatronDisplayName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Member's Patron Display Name",
+            "nullable": true
+          },
+          "ChamberCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Chamber code (H/S)",
+            "nullable": true
+          },
+          "PartyCode": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string",
+            "description": "Political party (R/D/I)",
+            "nullable": true
+          },
+          "MemberStatusID": {
+            "type": "integer",
+            "description": "Unique identifier for Member Status",
+            "format": "int32"
+          },
+          "MemberStatus": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Member Status name",
+            "nullable": true
+          },
+          "ServiceBeginDate": {
+            "type": "string",
+            "description": "Member's beginning service date (assignment date)",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ServiceEndDate": {
+            "type": "string",
+            "description": "Member's ending service date (removal date)",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ServiceEndReason": {
+            "type": "string",
+            "description": "Member Service End Reason",
+            "nullable": true
+          },
+          "GABPhoneNumber": {
+            "type": "string",
+            "description": "General Assembly Phone #",
+            "nullable": true
+          },
+          "GABEmailAddress": {
+            "type": "string",
+            "description": "General Assembly Email Address",
+            "nullable": true
+          },
+          "IsPublic": {
+            "type": "boolean",
+            "description": "Is this Member public ?"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Shallow information for member"
+      },
+      "ShallowMembersResponse": {
+        "type": "object",
+        "properties": {
+          "Success": {
+            "type": "boolean",
+            "description": "Is this a successful response?"
+          },
+          "FailureMessage": {
+            "type": "string",
+            "description": "Details if this response failed",
+            "nullable": true
+          },
+          "CacheKeyName": {
+            "type": "string",
+            "description": "CacheKey name",
+            "nullable": true
+          },
+          "ListItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShallowMemberResponse"
+            },
+            "description": "List of shallow members",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "List of shallow members"
+      }
+    },
+    "securitySchemes": {
+      "RefreshToken": {
+        "type": "apiKey",
+        "description": "Please enter the Refresh token",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter JWT with Bearer into field",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "RefreshToken": []
+    },
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "HeartBeat",
+      "description": "HeartBeat controller for getting telemetry on service health."
+    },
+    {
+      "name": "PublicActions",
+      "description": "Public actions Controller for reading data"
+    }
+  ]
+}
